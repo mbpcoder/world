@@ -4,7 +4,6 @@ namespace TheCoder\World\Repositories;
 
 use TheCoder\World\Location;
 use Illuminate\Support\Collection;
-use TheCoder\World\LocationFactory;
 use TheCoder\World\LocationType;
 
 class ContinentRepository extends Repository
@@ -54,6 +53,9 @@ class ContinentRepository extends Repository
 
     public function cities(): CityRepository
     {
+        if ($this->continent !== null) {
+            $this->cityRepository->whereContinentIdEqual($this->continent->id);
+        }
         return $this->cityRepository;
     }
 
