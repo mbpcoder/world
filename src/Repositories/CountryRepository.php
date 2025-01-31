@@ -53,6 +53,14 @@ class CountryRepository extends Repository
         return $this->cityRepository;
     }
 
+    public function count(): int
+    {
+        if ($this->country !== null) {
+            return $this->countryQuery->whereIdEqual($this->country->id)->count();
+        }
+        return $this->countryQuery->count();
+    }
+
     public function get(): Location|Collection
     {
         if ($this->country !== null) {

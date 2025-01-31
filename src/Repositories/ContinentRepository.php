@@ -59,6 +59,14 @@ class ContinentRepository extends Repository
         return $this->cityRepository;
     }
 
+    public function count(): int
+    {
+        if ($this->continent !== null) {
+            return 1;
+        }
+        return $this->continentQuery->count();
+    }
+
     public function get(): Location|Collection
     {
         if ($this->continent !== null) {
