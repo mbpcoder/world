@@ -2,73 +2,44 @@
 
 namespace TheCoder\World;
 
+use TheCoder\World\Repositories\CityRepository;
+use TheCoder\World\Repositories\ContinentRepository;
+use TheCoder\World\Repositories\CountryRepository;
+use TheCoder\World\Repositories\ProvinceRepository;
+
 class World
 {
-    private array $filters;
-
-    public function continent(): self
+    public function __construct(
+        private ContinentRepository $continentRepository = new ContinentRepository(),
+        private CountryRepository   $countryRepository = new CountryRepository(),
+        private ProvinceRepository  $provinceRepository = new ProvinceRepository(),
+        private CityRepository      $cityRepository = new CityRepository()
+    )
     {
-        $this->filters['type'] = LocationType::CONTINENT;
-        return $this;
     }
 
-    public function countries(): self
+    public function continents(): ContinentRepository
     {
-        $this->filters['type'] = LocationType::COUNTRY;
-        return $this;
+        return $this->continentRepository;
     }
 
-    public function provinces(): self
+    public function countries(): CountryRepository
     {
-        $this->filters['type'] = LocationType::PROVINCE;
-        return $this;
+        return $this->countryRepository;
     }
 
-    public function states(): self
+    public function provinces(): ProvinceRepository
+    {
+        return $this->provinceRepository;
+    }
+
+    public function states(): ProvinceRepository
     {
         return $this->provinces();
     }
 
-    public function cities(): self
+    public function cities(): CityRepository
     {
-        $this->filters['type'] = LocationType::CITY;
-        return $this;
-    }
-
-    public function getByEnglishName(string $englishName): Location
-    {
-        $this->filters['english_name'] = $englishName;
-        $l = new Location();
-
-        return $l;
-    }
-
-    public function getByNativeName(string $nativeName): Location
-    {
-        $l = new Location();
-
-        return $l;
-    }
-
-    public function getById(int $id): Location
-    {
-        $l = new Location();
-
-        return $l;
-    }
-
-    private function get(): array|Location
-    {
-        $query = $this->proccessFilter();
-        $l = new Location();
-        return $l;
-    }
-
-    private function proccessFilter(): string
-    {
-        foreach ($this->filters as $_filter) {
-
-        }
-        return '';
+        return $this->cityRepository;
     }
 }
