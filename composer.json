@@ -1,0 +1,17 @@
+{
+  "name": "thecoder/world",
+  "description": "World location data",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mahdi Bagheri",
+      "email": "thecoder.ir@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "TheCoder\\World\\": "src/"
+    }
+  }
+}
