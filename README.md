@@ -1,6 +1,15 @@
 # World
 
 
+
+## Installation
+Installation via php composer
+
+```bash
+composer require thecoder/world
+```
+
+## Examples
 ``` php
 
 $world = new World();
