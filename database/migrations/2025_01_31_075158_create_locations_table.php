@@ -21,12 +21,14 @@ return new class extends Migration {
             $table->string('english_name', 128);
             $table->string('timezone', 32)->nullable();
             $table->boolean('is_capital')->default(false);
-            $table->point('center')->nullable();
-            $table->multiPolygon('area')->nullable();
             $table->integer('priority')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
+
+        // Add spatial columns
+        \Illuminate\Support\Facades\DB::statement('ALTER TABLE locations ADD COLUMN center POINT NULL after is_capital');
+        \Illuminate\Support\Facades\DB::statement('ALTER TABLE locations ADD COLUMN area MULTIPOLYGON NULL after center');
     }
 
     /**
