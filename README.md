@@ -11,6 +11,11 @@ Easily retrieve geographical data using simple queries. Ideal for Laravel and PH
   * Get provinces and cities for any country.
   * Lightweight and optimized for performance.
   * Fully compatible with Laravel and PHP applications.
+  * PHP Country list
+  * Get all country list
+  * Get all cities as array
+  * Gte country from city
+
 
 ## Installation
 Install via [Composer](https://getcomposer.org):
