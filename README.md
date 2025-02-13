@@ -1,9 +1,19 @@
-# World
+# World - PHP Package for Continents, Countries, Provinces, and Cities
 
+## Overview
+World is a powerful PHP package that provides structured data for continents, countries, provinces, and cities.
 
+Easily retrieve geographical data using simple queries. Ideal for Laravel and PHP applications needing world geography data.
+
+## Features
+  * Retrieve all continents and countries.
+  * Filter countries by continent.
+  * Get provinces and cities for any country.
+  * Lightweight and optimized for performance.
+  * Fully compatible with Laravel and PHP applications.
 
 ## Installation
-Installation via php composer
+Install via Composer[https://getcomposer.org/]:
 
 ```bash
 composer require thecoder/world
@@ -25,3 +35,6 @@ $iranProvinces = $world->countries()->whereEnglishNameEqual('Iran')->provinces()
 $gilanProvinceCities = $world->provinces()->whereEnglishNameEqual('Gilan')->cities()->get();  // Get Gilan province cities
 
 ```
+
+## FAQ
+
