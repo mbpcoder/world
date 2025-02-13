@@ -1,4 +1,4 @@
-# World - PHP Package for Continents, Countries, Provinces, and Cities
+# World - PHP and Laravel Package for Continents, Countries, Provinces, and Cities
 
 ## Overview
 World is a powerful PHP package that provides structured data for continents, countries, provinces, and cities.
