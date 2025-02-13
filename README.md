@@ -11,7 +11,8 @@
 ✔ Retrieve provinces and cities for any country  
 ✔ Optimized for **high performance**  
 ✔ Compatible with **Laravel and PHP**  
-✔ Includes **migrations and seeding** for easy setup
+✔ Includes **migrations and seeding** for easy setup  
+✔ includes a Laravel Facade for simpler usage!
 
 ---
 
@@ -57,29 +58,57 @@ This will populate the database with continents, countries, provinces, and citie
 
 ## 🔍 Usage
 
-### Retrieve All Continents & Countries
+### 1️⃣ Using the Built-in World Facade (Recommended)
+
+The package now includes a **World** Facade, making it easier to access data:
+
+```php
+use World;
+
+$continents = World::continents()->get();  // Get all continents
+$countries = World::countries()->get();  // Get all countries
+```
+
+### 2️⃣ Manually Instantiate the Class
 
 ```php
 use TheCoder\World;
 
 $world = new World();
 
-$continents = $world->continents()->get();  // Get all continents
-$countries = $world->countries()->get();  // Get all countries
+$continents = $world->continents()->get();  
+$countries = $world->countries()->get();  
 ```
 
 ### Get Countries by Continent
 
 ```php
-$asia = $world->continents()->whereEnglishNameEqual('Asia')->get();  
-$asiaCountries = $world->continents()->whereEnglishNameEqual('Asia')->countries()->get();  
+$asia = World::continents()->whereEnglishNameEqual('Asia')->get();  
+$asiaCountries = World::continents()->whereEnglishNameEqual('Asia')->countries()->get();  
 ```
 
 ### Get Provinces & Cities
 
 ```php
-$iranProvinces = $world->countries()->whereEnglishNameEqual('Iran')->provinces()->get();  
-$gilanCities = $world->provinces()->whereEnglishNameEqual('Gilan')->cities()->get();  
+$iranProvinces = World::countries()->whereEnglishNameEqual('Iran')->provinces()->get();  
+$gilanCities = World::provinces()->whereEnglishNameEqual('Gilan')->cities()->get();  
+```
+
+---
+
+## 🏗 Package-Integrated Laravel Facade
+
+The package now provides a **World** Facade out-of-the-box, meaning Laravel users **don't need to set it up manually**.
+
+✔ **No need to register aliases**  
+✔ **Works automatically in Laravel**
+
+Just install the package and start using it:
+
+```php
+use World;
+
+$continents = World::continents()->get();
 ```
 
 ---

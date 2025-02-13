@@ -3,7 +3,9 @@
 namespace TheCoder\World;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
 use TheCoder\World\Console\Commands\SeedWorld;
+use TheCoder\World\Facades\World;
 
 class WorldServiceProvider extends ServiceProvider
 {
@@ -15,6 +17,7 @@ class WorldServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPublishing();
+        AliasLoader::getInstance()->alias('World', World::class);
     }
 
     /**
