@@ -1,16 +1,18 @@
 <?php
 
-namespace TheCoder\World\database\seeders;
+namespace TheCoder\World\Seeders;
 
 use Illuminate\Support\Facades\DB;
 use TheCoder\World\Spatial\Point;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
-class LocationTableSeeder
+class WorldLocationTableSeeder extends Seeder
 {
     public function run()
     {
         // Read the JSON file
-        $json = file_get_contents('locations.json');
+        $json = file_get_contents(__DIR__ . '/locations.json');
         $data = json_decode($json);
 
         // Insert each item into the continents table

@@ -1,20 +1,27 @@
 {
-  "name": "thecoder/world",
-  "description": "World location data",
-  "type": "library",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Mahdi Bagheri",
-      "email": "thecoder.ir@gmail.com"
+    "name": "thecoder/world",
+    "description": "World location data",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mahdi Bagheri",
+            "email": "thecoder.ir@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TheCoder\\World\\WorldServiceProvider"
+            ]
+        }
+    },
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "TheCoder\\World\\": "src/",
+        }
     }
-  ],
-  "require": {
-    "php": ">=8.1"
-  },
-  "autoload": {
-    "psr-4": {
-      "TheCoder\\World\\": "src/"
-    }
-  }
 }
