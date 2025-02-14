@@ -26,7 +26,8 @@
     },
     "autoload": {
         "psr-4": {
-            "TheCoder\\World\\": "src/"
+            "TheCoder\\World\\": "src/",
+            "TheCoder\\World\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {
