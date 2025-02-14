@@ -16,7 +16,6 @@ class CountryRepository extends Repository
     {
         $this->countryQuery = DB::table("locations")
             ->where('type', LocationType::COUNTRY->value);
-            ->newQuery();
 
         parent::__construct();
     }
