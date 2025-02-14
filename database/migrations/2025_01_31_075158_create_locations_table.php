@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use \Illuminate\Support\Facades\DB;
 
 return new class extends Migration {
 
@@ -31,8 +32,8 @@ return new class extends Migration {
         });
 
         // Add spatial columns
-        \Illuminate\Support\Facades\DB::statement("ALTER TABLE $this->tableName ADD COLUMN center POINT NULL after is_capital");
-        \Illuminate\Support\Facades\DB::statement("ALTER TABLE $this->tableName ADD COLUMN area MULTIPOLYGON NULL after center");
+      DB::statement("ALTER TABLE $this->tableName ADD COLUMN center POINT NULL after is_capital");
+      DB::statement("ALTER TABLE $this->tableName ADD COLUMN area MULTIPOLYGON NULL after center");
     }
 
     /**
