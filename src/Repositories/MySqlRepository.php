@@ -14,7 +14,7 @@ trait MySqlRepository
 
     protected function getNewQuery(): Builder
     {
-        return DB::table('locations');
+        return DB::table(config('world.table_name'));
     }
 
     protected function hasWhereConditions(): bool

@@ -10,7 +10,8 @@ class WorldLocationTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('locations')->truncate();
+        $tableName = config('world.table_name');
+        DB::table($tableName)->truncate();
 
         $data = $this->loadData();
 
@@ -45,7 +46,7 @@ class WorldLocationTableSeeder extends Seeder
                 ];
             }
 
-            DB::table('locations')->insert($insertData);
+            DB::table($tableName)->insert($insertData);
         }
     }
 
