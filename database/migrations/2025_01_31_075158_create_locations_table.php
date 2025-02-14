@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->char('iso_code', 3)->nullable()->index();
             $table->enum('type', ['continent', 'country', 'region', 'province', 'city'])->index();
             $table->string('native_name', 128)->nullable();
-            $table->string('english_name', 128);
+            $table->string('english_name', 128)->index();
             $table->string('timezone', 32)->nullable();
             $table->boolean('is_capital')->default(false);
             $table->integer('priority')->default(0);
