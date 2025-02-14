@@ -121,6 +121,46 @@ $continents = World::continents()->get();
 
 ---
 
+## 🧪Testing
+Ensure you have the necessary dependencies installed:
+```bash
+composer install --dev
+```
+### ⚠️ Database Configuration for Testing
+Due to special columns in the database, SQLite is not supported for testing.
+
+Instead, configure MySQL in phpunit.xml:
+
+```xml
+    <php>
+        <env name="DB_CONNECTION" value="mysql"/>
+        <env name="DB_HOST" value="127.0.0.1"/>
+        <env name="DB_PORT" value="3306"/>
+        <env name="DB_DATABASE" value="world_test_database"/>
+        <env name="DB_USERNAME" value="root"/>
+        <env name="DB_PASSWORD" value=""/>
+    </php>
+```
+
+### ▶️ Running tests
+```bash
+vendor/bin/phpunit
+```
+### ⏭️ Skipping Migrations and Seeding
+#### On Windows (cmd)
+```bash
+set SKIP_DB_SETUP=1 && vendor\bin\phpunit
+```
+#### On Windows (PowerShell)
+```bash
+$env:SKIP_DB_SETUP="1"; vendor/bin/phpunit
+```
+#### On Linux/
+```bash
+SKIP_DB_SETUP=1 vendor/bin/phpunit
+```
+
+
 ## 🗄 Database Schema
 
 This package provides a **locations table** designed to store structured geographic data with hierarchical relationships.
