@@ -14,10 +14,8 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
 
-        if (!getenv('SKIP_DB_SETUP')) {
-            $this->artisan('migrate')->run();
-            $this->artisan('world:seed')->run();
-        }
+        $this->artisan('migrate')->run();
+        $this->artisan('world:seed')->run();
     }
 
     protected function getPackageProviders($app)

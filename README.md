@@ -146,20 +146,6 @@ Instead, configure MySQL in phpunit.xml:
 ```bash
 vendor/bin/phpunit
 ```
-### ⏭️ Skipping Migrations and Seeding
-#### On Windows (cmd)
-```bash
-set SKIP_DB_SETUP=1 && vendor\bin\phpunit
-```
-#### On Windows (PowerShell)
-```bash
-$env:SKIP_DB_SETUP="1"; vendor/bin/phpunit
-```
-#### On Linux/
-```bash
-SKIP_DB_SETUP=1 vendor/bin/phpunit
-```
-
 
 ## 🗄 Database Schema
 
