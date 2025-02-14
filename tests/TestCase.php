@@ -8,14 +8,14 @@ use TheCoder\World\WorldServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
-    //use RefreshDatabase;
+    use RefreshDatabase;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-       // $this->artisan('migrate')->run();
-       // $this->artisan('world:seed')->run();
+        $this->artisan('migrate')->run();
+        $this->artisan('world:seed')->run();
     }
 
     protected function getPackageProviders($app)
