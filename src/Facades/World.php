@@ -9,10 +9,10 @@ use TheCoder\World\Repositories\CountryRepository;
 use TheCoder\World\Repositories\ProvinceRepository;
 
 /**
- * @method static ContinentRepository continents()
- * @method static CountryRepository countries()
- * @method static ProvinceRepository provinces()
- * @method static CityRepository cities()
+ * @method static ContinentRepository continents(int|string|null $continent = null)
+ * @method static CountryRepository countries(int|string|null $country = null)
+ * @method static ProvinceRepository provinces(int|string|null $province = null)
+ * @method static CityRepository cities(int|string|null $city = null)
  *
  * @see \TheCoder\World\World
  */
