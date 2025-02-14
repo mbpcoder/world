@@ -17,6 +17,9 @@ class WorldServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPublishing();
+
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+
         AliasLoader::getInstance()->alias('World', World::class);
     }
 
