@@ -83,15 +83,23 @@ $countries = $world->countries()->get();
 ### Get Countries by Continent
 
 ```php
-$asia = World::continents()->whereEnglishNameEqual('Asia')->get();  
-$asiaCountries = World::continents()->whereEnglishNameEqual('Asia')->countries()->get();  
+$asia = World::continents('Asia')->first();
+
+$asia = World::continents()->englishNameEqual('Asia')->first();  
+
+$asiaCountries = World::continents()->englishNameEqual('Asia')->countries()->get();  
 ```
 
 ### Get Provinces & Cities
 
 ```php
-$iranProvinces = World::countries()->whereEnglishNameEqual('Iran')->provinces()->get();  
-$gilanCities = World::provinces()->whereEnglishNameEqual('Gilan')->cities()->get();  
+$iranProvinces = World::countries('Iran')->provinces()->get();
+
+$iranProvinces = World::countries()->englishNameEqual('Iran')->provinces()->get();
+
+$gilanCities = World::provinces('Gilan')->cities()->get();  
+  
+$gilanCities = World::provinces()->englishNameEqual('Gilan')->cities()->get();  
 ```
 
 ---
@@ -149,13 +157,13 @@ Yes! It fully supports Laravel and can also be used in vanilla PHP projects.
 ### 🔹 How can I filter countries by continent?
 
 ```php
-$world->continents()->whereEnglishNameEqual('Europe')->countries()->get();
+World::continents('Europe')->countries()->get();
 ```
 
 ### 🔹 Can I get cities of a specific province?
 
 ```php
-$world->provinces()->whereEnglishNameEqual('California')->cities()->get();
+World::provinces('California')->cities()->get();
 ```
 
 ---
