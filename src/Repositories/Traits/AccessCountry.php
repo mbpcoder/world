@@ -1,6 +1,6 @@
 <?php
 
-namespace Thecoder\World\Repositories\Traits;
+namespace TheCoder\World\Repositories\Traits;
 
 
 use TheCoder\World\Repositories\CountryRepository;

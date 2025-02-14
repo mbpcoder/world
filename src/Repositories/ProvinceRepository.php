@@ -4,8 +4,8 @@ namespace TheCoder\World\Repositories;
 
 use TheCoder\World\Location;
 use TheCoder\World\LocationType;
-use Thecoder\World\Repositories\Traits\AccessContinent;
-use Thecoder\World\Repositories\Traits\AccessCountry;
+use TheCoder\World\Repositories\Traits\AccessContinent;
+use TheCoder\World\Repositories\Traits\AccessCountry;
 
 class ProvinceRepository extends Repository
 {

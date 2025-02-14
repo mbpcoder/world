@@ -3,12 +3,10 @@
 namespace TheCoder\World\Repositories;
 
 use TheCoder\World\Location;
-use Illuminate\Support\Collection;
 use TheCoder\World\LocationType;
-use Illuminate\Support\Facades\DB;
-use Thecoder\World\Repositories\Traits\AccessContinent;
-use Thecoder\World\Repositories\Traits\AccessCountry;
-use Thecoder\World\Repositories\Traits\AccessProvince;
+use TheCoder\World\Repositories\Traits\AccessContinent;
+use TheCoder\World\Repositories\Traits\AccessCountry;
+use TheCoder\World\Repositories\Traits\AccessProvince;
 
 class CityRepository extends Repository
 {

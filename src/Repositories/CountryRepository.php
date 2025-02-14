@@ -4,7 +4,7 @@ namespace TheCoder\World\Repositories;
 
 use TheCoder\World\Location;
 use TheCoder\World\LocationType;
-use Thecoder\World\Repositories\Traits\AccessContinent;
+use TheCoder\World\Repositories\Traits\AccessContinent;
 
 class CountryRepository extends Repository
 {
