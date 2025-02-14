@@ -3,9 +3,7 @@
 namespace TheCoder\World\Seeders;
 
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\Console\Helper\ProgressBar;
 use TheCoder\World\Spatial\Point;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class WorldLocationTableSeeder extends Seeder
