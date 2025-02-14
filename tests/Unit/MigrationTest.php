@@ -9,6 +9,6 @@ class MigrationTest extends TestCase
 {
     public function test_migrations_run_successfully()
     {
-        $this->assertTrue(Schema::hasTable('locations'));
+        $this->assertTrue(Schema::hasTable(config('world.table_name')));
     }
 }
