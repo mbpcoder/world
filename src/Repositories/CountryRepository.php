@@ -5,26 +5,18 @@ namespace TheCoder\World\Repositories;
 use TheCoder\World\Location;
 use Illuminate\Support\Collection;
 use TheCoder\World\LocationType;
+use Illuminate\Support\Facades\DB;
 
 class CountryRepository extends Repository
 {
-    private Location|null $country;
-
-    private $countryQuery;
-
-    private ContinentRepository $continentRepository;
-    private ProvinceRepository $provinceRepository;
-    private CityRepository $cityRepository;
+    protected Location|null $country = null;
+    protected $countryQuery;
 
     public function __construct()
     {
-        $this->continentRepository = new ContinentRepository();
-        $this->provinceRepository = new ProvinceRepository();
-        $this->cityRepository = new CityRepository();
-
         $this->countryQuery = DB::table("locations")
-            ->where('type', LocationType::COUNTRY->value)
-            ->query();
+            ->where('type', LocationType::COUNTRY->value);
+            ->newQuery();
 
         parent::__construct();
     }
@@ -37,20 +29,21 @@ class CountryRepository extends Repository
 
     public function continent(): ContinentRepository
     {
+        $continentRepository =  $this->repositoryFactory->getContinentRepository();
         if ($this->country !== null) {
-            $this->continentRepository->whereIdEqual($this->country->continentId);
+            $continentRepository->whereIdEqual($this->country->continentId);
         }
-        return $this->continentRepository;
+        return $continentRepository;
     }
 
     public function provinces(): ProvinceRepository
     {
-        return $this->provinceRepository;
+        return $this->repositoryFactory->getProvinceRepository();
     }
 
     public function cities(): CityRepository
     {
-        return $this->cityRepository;
+        return $this->repositoryFactory->getCityRepository();
     }
 
     public function count(): int

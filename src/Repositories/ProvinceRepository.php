@@ -5,28 +5,17 @@ namespace TheCoder\World\Repositories;
 use TheCoder\World\Location;
 use Illuminate\Support\Collection;
 use TheCoder\World\LocationType;
+use Illuminate\Support\Facades\DB;
 
 class ProvinceRepository extends Repository
 {
-    private Location|null $province;
-
-    private $provinceQuery;
-
-    private ContinentRepository $continentRepository;
-    private CountryRepository $countryRepository;
-    private ProvinceRepository $provinceRepository;
-    private CityRepository $cityRepository;
+    protected Location|null $province = null;
+    protected $provinceQuery;
 
     public function __construct()
     {
-        $this->continentRepository = new ContinentRepository();
-        $this->countryRepository = new CountryRepository();
-        $this->provinceRepository = new ProvinceRepository();
-        $this->cityRepository = new CityRepository();
-
         $this->provinceQuery = DB::table("locations")
-            ->where('type', LocationType::PROVINCE->value)
-            ->query();
+            ->where('type', LocationType::PROVINCE->value);
 
         parent::__construct();
     }
@@ -39,26 +28,29 @@ class ProvinceRepository extends Repository
 
     public function continent(): ContinentRepository
     {
+        $continentRepository = $this->repositoryFactory->getContinentRepository();
         if ($this->province !== null) {
-            $this->continentRepository->whereIdEqual($this->province->continentId);
+            $continentRepository->whereIdEqual($this->province->continentId);
         }
-        return $this->continentRepository;
+        return $continentRepository;
     }
 
     public function country(): CountryRepository
     {
+        $countryRepository = $this->repositoryFactory->getCountryRepository();
         if ($this->province !== null) {
-            $this->countryRepository->whereIdEqual($this->province->countryId);
+            $countryRepository->whereIdEqual($this->province->countryId);
         }
-        return $this->countryRepository;
+        return $countryRepository;
     }
 
     public function cities(): CityRepository
     {
+        $cityRepository = $this->repositoryFactory->getCityRepository();
         if ($this->province !== null) {
-            $this->cityRepository->whereProvinceIdEqual($this->province->id);
+            $cityRepository->whereProvinceIdEqual($this->province->id);
         }
-        return $this->cityRepository;
+        return $cityRepository;
     }
 
     public function get(): Location|Collection

@@ -6,31 +6,28 @@ use TheCoder\World\Repositories\CityRepository;
 use TheCoder\World\Repositories\ContinentRepository;
 use TheCoder\World\Repositories\CountryRepository;
 use TheCoder\World\Repositories\ProvinceRepository;
+use TheCoder\World\Repositories\RepositoryFactory;
 
 class World
 {
-    public function __construct(
-        private ContinentRepository $continentRepository = new ContinentRepository(),
-        private CountryRepository   $countryRepository = new CountryRepository(),
-        private ProvinceRepository  $provinceRepository = new ProvinceRepository(),
-        private CityRepository      $cityRepository = new CityRepository()
-    )
+
+    public function __construct(private RepositoryFactory $repositoryFactory = new RepositoryFactory())
     {
     }
 
     public function continents(): ContinentRepository
     {
-        return $this->continentRepository;
+        return $this->repositoryFactory->getContinentRepository();
     }
 
     public function countries(): CountryRepository
     {
-        return $this->countryRepository;
+        return $this->repositoryFactory->getCountryRepository();
     }
 
     public function provinces(): ProvinceRepository
     {
-        return $this->provinceRepository;
+        return $this->repositoryFactory->getProvinceRepository();
     }
 
     public function states(): ProvinceRepository
@@ -40,6 +37,6 @@ class World
 
     public function cities(): CityRepository
     {
-        return $this->cityRepository;
+        return $this->repositoryFactory->getCityRepository();
     }
 }

@@ -5,26 +5,17 @@ namespace TheCoder\World\Repositories;
 use TheCoder\World\Location;
 use Illuminate\Support\Collection;
 use TheCoder\World\LocationType;
+use Illuminate\Support\Facades\DB;
 
 class ContinentRepository extends Repository
 {
-    private Location|null $continent;
-
-    private $continentQuery;
-
-    private CountryRepository $countryRepository;
-    private ProvinceRepository $provinceRepository;
-    private CityRepository $cityRepository;
+    protected Location|null $continent = null;
+    protected $continentQuery;
 
     public function __construct()
     {
-        $this->countryRepository = new CountryRepository();
-        $this->provinceRepository = new ProvinceRepository();
-        $this->cityRepository = new CityRepository();
-
         $this->continentQuery = DB::table("locations")
-            ->where('type', LocationType::CONTINENT->value)
-            ->query();
+            ->where('type', LocationType::CONTINENT->value);
 
         parent::__construct();
     }
@@ -37,26 +28,29 @@ class ContinentRepository extends Repository
 
     public function countries(): CountryRepository
     {
+        $countryRepository = $this->repositoryFactory->getCountryRepository();
         if ($this->continent !== null) {
-            $this->countryRepository->whereContinentIdEqual($this->continent->id);
+            $countryRepository->whereContinentIdEqual($this->continent->id);
         }
-        return $this->countryRepository;
+        return $countryRepository;
     }
 
     public function provinces(): ProvinceRepository
     {
+        $provinceRepository = $this->repositoryFactory->getProvinceRepository();
         if ($this->continent !== null) {
-            $this->provinceRepository->whereContinentIdEqual($this->continent->id);
+            $provinceRepository->whereContinentIdEqual($this->continent->id);
         }
         return $this->provinceRepository;
     }
 
     public function cities(): CityRepository
     {
+        $cityRepository = $this->repositoryFactory->getCityRepository();
         if ($this->continent !== null) {
-            $this->cityRepository->whereContinentIdEqual($this->continent->id);
+            $cityRepository->whereContinentIdEqual($this->continent->id);
         }
-        return $this->cityRepository;
+        return $cityRepository;
     }
 
     public function count(): int
