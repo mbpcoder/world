@@ -15,19 +15,25 @@ class World
     {
     }
 
-    public function continents(): ContinentRepository
+    public function continents(int|string|null $continent = null): ContinentRepository
     {
-        return $this->repositoryFactory->getContinentRepository();
+        $continentRepository = $this->repositoryFactory->getContinentRepository();
+        $continentRepository->setContinent($continent);
+        return $continentRepository;
     }
 
-    public function countries(): CountryRepository
+    public function countries(int|string|null $country = null): CountryRepository
     {
-        return $this->repositoryFactory->getCountryRepository();
+        $countryRepository = $this->repositoryFactory->getCountryRepository();
+        $countryRepository->setCountry($country);
+        return $countryRepository;
     }
 
-    public function provinces(): ProvinceRepository
+    public function provinces(int|string|null $province = null): ProvinceRepository
     {
-        return $this->repositoryFactory->getProvinceRepository();
+        $provinceRepository = $this->repositoryFactory->getProvinceRepository();
+        $provinceRepository->setProvince($province);
+        return $provinceRepository;
     }
 
     public function states(): ProvinceRepository
@@ -35,8 +41,10 @@ class World
         return $this->provinces();
     }
 
-    public function cities(): CityRepository
+    public function cities(int|string|null $city = null): CityRepository
     {
-        return $this->repositoryFactory->getCityRepository();
+        $cityRepository = $this->repositoryFactory->getCityRepository();
+        $cityRepository->setCity($city);
+        return $cityRepository;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace TheCoder\World\Repositories;
 
-use TheCoder\World\Location;
 use TheCoder\World\LocationFactory;
 
 class Repository
