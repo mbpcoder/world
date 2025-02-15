@@ -10,7 +10,7 @@ use TheCoder\World\Repositories\Traits\AccessProvince;
 
 class CityRepository extends Repository
 {
-    use MySqlRepository;
+    use LocationRepository;
     use AccessContinent;
     use AccessCountry;
     use AccessProvince;

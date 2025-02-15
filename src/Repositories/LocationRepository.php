@@ -4,11 +4,12 @@ namespace TheCoder\World\Repositories;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use TheCoder\World\Location;
 use TheCoder\World\LocationFactory;
 
-trait MySqlRepository
+trait LocationRepository
 {
     protected Builder $query;
 
@@ -27,19 +28,55 @@ trait MySqlRepository
      */
     public function get(): Collection
     {
+        $cacheKey = null;
+        if (config('world.cache.enabled')) {
+            $cacheKey = $this->makeCacheKey($this->query, __FUNCTION__);
+            $result = Cache::get($cacheKey);
+            if ($result !== null) return $result;
+        }
+
         $entities = $this->query->get();
-        return $this->locationFactory->makeFromCollection($entities);
+        $locations = $this->locationFactory->makeFromCollection($entities);
+
+        if ($cacheKey !== null) {
+            $this->cachePut($cacheKey, $locations);
+        }
+        return $locations;
     }
 
     public function first(): Location|null
     {
-        $entity = $this->query->first();
-        return $this->locationFactory->make($entity);
+        $this->query->take(1);
+
+        $cacheKey = null;
+        if (config('world.cache.enabled')) {
+            $cacheKey = $this->makeCacheKey($this->query, __FUNCTION__);
+            $result = Cache::get($cacheKey);
+            if ($result !== null) return $result;
+        }
+
+        $entity = $this->query->get()->first();
+        $location = $this->locationFactory->make($entity);
+
+        $this->cachePut($cacheKey, $location);
+
+        return $location;
     }
 
     public function count(): int
     {
-        return $this->query->count();
+        $cacheKey = null;
+        if (config('world.cache.enabled')) {
+            $cacheKey = $this->makeCacheKey($this->query, __FUNCTION__);
+            $result = Cache::get($cacheKey);
+            if ($result !== null) return $result;
+        }
+
+        $count = $this->query->count();
+
+        $this->cachePut($cacheKey, $count);
+
+        return $count;
     }
 
     public function idEqual(int $id): self
@@ -76,6 +113,23 @@ trait MySqlRepository
     {
         $this->query->where("province_id", $provinceId);
         return $this;
+    }
+
+    protected function cachePut(string|null $cacheKey, mixed $data): void
+    {
+        if ($cacheKey !== null) {
+            if (Cache::supportsTags()) {
+                $tag = config('world.cache.tag');
+                Cache::tags($tag)->put($cacheKey, $data);
+            } else {
+                Cache::put($cacheKey, $data);
+            }
+        }
+    }
+
+    protected function makeCacheKey(Builder $query, string $functionName): string
+    {
+        return config('world.cache.prefix') . md5($functionName . $query->toRawSql());
     }
 
 //    protected function where(string $column, string|int|null|bool $operator = null, string|int|null|bool $value = null): self

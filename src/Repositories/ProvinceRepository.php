@@ -9,7 +9,7 @@ use TheCoder\World\Repositories\Traits\AccessCountry;
 
 class ProvinceRepository extends Repository
 {
-    use MySqlRepository;
+    use LocationRepository;
 
     use AccessContinent;
     use AccessCountry;

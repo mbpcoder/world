@@ -7,7 +7,7 @@ use TheCoder\World\LocationType;
 
 class ContinentRepository extends Repository
 {
-    use MySqlRepository;
+    use LocationRepository;
 
     protected Location|null $continent = null;
 

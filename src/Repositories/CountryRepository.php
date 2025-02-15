@@ -8,7 +8,7 @@ use TheCoder\World\Repositories\Traits\AccessContinent;
 
 class CountryRepository extends Repository
 {
-    use MySqlRepository;
+    use LocationRepository;
 
     use AccessContinent;
 
