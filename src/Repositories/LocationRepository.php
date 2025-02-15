@@ -31,7 +31,7 @@ trait LocationRepository
         $cacheKey = null;
         if (config('world.cache.enabled')) {
             $cacheKey = $this->makeCacheKey($this->query, __FUNCTION__);
-            $result = Cache::get($cacheKey);
+            $result = $this->cacheGet($cacheKey);
             if ($result !== null) return $result;
         }
 
@@ -51,7 +51,7 @@ trait LocationRepository
         $cacheKey = null;
         if (config('world.cache.enabled')) {
             $cacheKey = $this->makeCacheKey($this->query, __FUNCTION__);
-            $result = Cache::get($cacheKey);
+            $result = $this->cacheGet($cacheKey);
             if ($result !== null) return $result;
         }
 
@@ -68,7 +68,7 @@ trait LocationRepository
         $cacheKey = null;
         if (config('world.cache.enabled')) {
             $cacheKey = $this->makeCacheKey($this->query, __FUNCTION__);
-            $result = Cache::get($cacheKey);
+            $result = $this->cacheGet($cacheKey);
             if ($result !== null) return $result;
         }
 
@@ -117,14 +117,27 @@ trait LocationRepository
 
     protected function cachePut(string|null $cacheKey, mixed $data): void
     {
+        $ttl = config('world.cache.ttl');
+        $tag = config('world.cache.tag');
+
         if ($cacheKey !== null) {
-            if (Cache::supportsTags()) {
-                $tag = config('world.cache.tag');
-                Cache::tags($tag)->put($cacheKey, $data);
+            if (Cache::supportsTags() && $tag !== null) {
+                $cache = Cache::tags($tag);
             } else {
-                Cache::put($cacheKey, $data);
+                $cache = Cache::store();
             }
+
+            $ttl === null ? $cache->forever($cacheKey, $data) : $cache->put($cacheKey, $data, $ttl);
         }
+    }
+
+    protected function cacheGet(string|null $cacheKey): mixed
+    {
+        $tag = config('world.cache.tag');
+        if (Cache::supportsTags() && $tag !== null) {
+            return Cache::tags($tag)->get($cacheKey);
+        }
+        return Cache::get($cacheKey);
     }
 
     protected function makeCacheKey(Builder $query, string $functionName): string

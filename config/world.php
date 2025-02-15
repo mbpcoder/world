@@ -6,5 +6,6 @@ return [
         'enabled' => true,
         'prefix' => 'thecoder-world-',
         'tag' => 'thecoder-world',
+        'ttl' => null,  // Cache forever
     ],
 ];

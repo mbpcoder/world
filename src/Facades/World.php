@@ -13,6 +13,7 @@ use TheCoder\World\Repositories\ProvinceRepository;
  * @method static CountryRepository countries(int|string|null $country = null)
  * @method static ProvinceRepository provinces(int|string|null $province = null)
  * @method static CityRepository cities(int|string|null $city = null)
+ * @method static void clearCache()
  *
  * @see \TheCoder\World\World
  */

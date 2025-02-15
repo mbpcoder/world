@@ -2,6 +2,7 @@
 
 namespace TheCoder\World;
 
+use Illuminate\Support\Facades\Cache;
 use TheCoder\World\Repositories\CityRepository;
 use TheCoder\World\Repositories\ContinentRepository;
 use TheCoder\World\Repositories\CountryRepository;
@@ -11,7 +12,7 @@ use TheCoder\World\Repositories\RepositoryFactory;
 class World
 {
 
-    public function __construct(private RepositoryFactory $repositoryFactory = new RepositoryFactory())
+    public function __construct(private readonly RepositoryFactory $repositoryFactory = new RepositoryFactory())
     {
     }
 
@@ -46,5 +47,16 @@ class World
         $cityRepository = $this->repositoryFactory->getCityRepository();
         $cityRepository->setCity($city);
         return $cityRepository;
+    }
+
+    public function clearCache()
+    {
+        if (config('world.cache.enabled')) {
+            if (Cache::supportsTags()) {
+                Cache::tags(config('world.cache.tag'))->flush();
+            } else {
+                Cache::flush();
+            }
+        }
     }
 }
