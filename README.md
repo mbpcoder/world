@@ -30,7 +30,7 @@ If auto-discovery is not working, manually add the service provider in `config/a
 TheCoder\World\WorldServiceProvider::class,
 ```
 
-### 🔧 Publish Configuration & Migrations
+### 🔧 Publish Configuration & Migrations for Greater Flexibility
 
 ```sh
 php artisan vendor:publish --provider="TheCoder\World\WorldServiceProvider"
