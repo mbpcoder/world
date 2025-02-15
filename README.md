@@ -9,7 +9,7 @@
 ✔ Get all **continents, countries, provinces, and cities**  
 ✔ Filter countries by continent  
 ✔ Retrieve provinces and cities for any country  
-✔ Optimized for **high performance**  
+✔ Optimized for **high performance** with caching
 ✔ Compatible with **Laravel and PHP**  
 ✔ Includes **migrations and seeding** for easy setup  
 ✔ includes a Laravel Facade for simpler usage!
@@ -104,6 +104,35 @@ $gilanCities = World::provinces()->englishNameEqual('Gilan')->cities()->get();
 
 ---
 
+## ⚡Caching for Maximum Performance
+Since the World database is static and never changes, this package supports permanent caching to eliminate redundant database queries and significantly improve performance.
+
+### Enable Caching
+You can enable caching in the ``` config/world.php ``` file:
+```php
+  'cache' => [
+      'enabled' => true,
+      'prefix' => 'thecoder-world-',
+      'tag' => 'thecoder-world',
+      'ttl' => null, // Store cache forever
+  ],
+```
+Setting ttl to null ensures that data is cached forever.
+
+### Use Cached Data in Queries
+If caching is enabled, queries will automatically store results in the cache forever.
+
+### Manually Clear Cache (If Needed)
+To clear the cache manually, run:
+```bash
+  php artisan cache:clear
+```
+Or in code:
+```php
+World::clearCache();
+```
+
+---
 ## 🏗 Package-Integrated Laravel Facade
 
 The package now provides a **World** Facade out-of-the-box, meaning Laravel users **don't need to set it up manually**.
