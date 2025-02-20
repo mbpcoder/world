@@ -15,6 +15,7 @@ use TheCoder\World\Repositories\RegionRepository;
  * @method static ProvinceRepository provinces(int|string|null $province = null)
  * @method static RegionRepository regions(int|string|null $region = null)
  * @method static CityRepository cities(int|string|null $city = null)
+ * @method static void clearCache()
  *
  * @see \TheCoder\World\World
  */

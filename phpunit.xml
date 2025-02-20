@@ -21,5 +21,9 @@
         <env name="DB_DATABASE" value="world_test_database"/>
         <env name="DB_USERNAME" value="root"/>
         <env name="DB_PASSWORD" value=""/>
+        <env name="CACHE_DRIVER" value="redis"/>
+        <env name="REDIS_HOST" value="127.0.0.1"/>
+        <env name="REDIS_PASSWORD" value="null"/>
+        <env name="REDIS_PORT" value="6379"/>
     </php>
 </phpunit>
