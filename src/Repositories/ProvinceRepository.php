@@ -4,24 +4,21 @@ namespace TheCoder\World\Repositories;
 
 use TheCoder\World\Location;
 use TheCoder\World\LocationType;
+use TheCoder\World\Repositories\Traits\AccessCities;
 use TheCoder\World\Repositories\Traits\AccessContinent;
 use TheCoder\World\Repositories\Traits\AccessCountry;
+use TheCoder\World\Repositories\Traits\AccessRegion;
 
 class ProvinceRepository extends Repository
 {
-    use MySqlRepository;
-
     use AccessContinent;
     use AccessCountry;
+    use AccessRegion;
+
+    use AccessCities;
 
     protected Location|null $province = null;
-
-    public function __construct()
-    {
-        $this->query = $this->getNewQuery()->where('type', LocationType::PROVINCE->value);
-
-        parent::__construct();
-    }
+    protected LocationType $locationType = LocationType::PROVINCE;
 
     public function setProvince(Location|string|int|null $province): self
     {
@@ -33,19 +30,6 @@ class ProvinceRepository extends Repository
             };
         }
         return $this;
-    }
-
-    public function cities(): CityRepository
-    {
-        $cityRepository = $this->repositoryFactory->getCityRepository();
-
-        if ($this->province !== null) {
-            $cityRepository->provinceIdEqual($this->province->id);
-        } elseif ($this->hasWhereConditions()) {
-            $this->province = $this->first();
-            $cityRepository->provinceIdEqual($this->province->id);
-        }
-        return $cityRepository;
     }
 
     protected function setLocation(Location $location): void

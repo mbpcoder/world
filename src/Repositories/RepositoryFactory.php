@@ -4,7 +4,7 @@ namespace TheCoder\World\Repositories;
 
 class RepositoryFactory
 {
-    protected $repositories = [];
+    protected array $repositories = [];
 
     protected function get(string $repository)
     {
@@ -22,6 +22,12 @@ class RepositoryFactory
     public function getCountryRepository(): CountryRepository
     {
         return $this->get(CountryRepository::class);
+    }
+
+
+    public function getRegionRepository(): RegionRepository
+    {
+        return $this->get(RegionRepository::class);
     }
 
     public function getProvinceRepository(): ProvinceRepository

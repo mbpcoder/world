@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use TheCoder\World\Location;
 use TheCoder\World\LocationFactory;
+use TheCoder\World\LocationType;
 
 trait MySqlRepository
 {
@@ -14,7 +15,7 @@ trait MySqlRepository
 
     protected function getNewQuery(): Builder
     {
-        return DB::table(config('world.table_name'));
+        return $this->query = DB::table(config('world.table_name'))->where('type', $this->locationType->value);
     }
 
     protected function hasWhereConditions(): bool
@@ -72,20 +73,15 @@ trait MySqlRepository
         return $this;
     }
 
+    public function regionIdEqual(int $regionId): self
+    {
+        $this->query->where("region_id", $regionId);
+        return $this;
+    }
+
     public function provinceIdEqual(int $provinceId): self
     {
         $this->query->where("province_id", $provinceId);
         return $this;
     }
-
-//    protected function where(string $column, string|int|null|bool $operator = null, string|int|null|bool $value = null): self
-//    {
-//        if ($value === null) {
-//            $value = $operator;
-//            $operator = '=';
-//        }
-//
-//        $this->query->where($column, $operator, $englishName);
-//        return $this;
-//    }
 }

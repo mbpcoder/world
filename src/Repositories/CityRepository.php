@@ -7,22 +7,17 @@ use TheCoder\World\LocationType;
 use TheCoder\World\Repositories\Traits\AccessContinent;
 use TheCoder\World\Repositories\Traits\AccessCountry;
 use TheCoder\World\Repositories\Traits\AccessProvince;
+use TheCoder\World\Repositories\Traits\AccessRegion;
 
 class CityRepository extends Repository
 {
-    use MySqlRepository;
     use AccessContinent;
     use AccessCountry;
+    use AccessRegion;
     use AccessProvince;
 
     protected Location|null $city = null;
-
-    public function __construct()
-    {
-        $this->query = $this->getNewQuery()->where('type', LocationType::CITY->value);
-
-        parent::__construct();
-    }
+    protected LocationType $locationType = LocationType::CITY;
 
     public function setCity(Location|string|int|null $city): self
     {

@@ -2,7 +2,6 @@
 
 namespace TheCoder\World\Repositories\Traits;
 
-
 use TheCoder\World\Repositories\ProvinceRepository;
 
 trait AccessProvince

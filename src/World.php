@@ -6,6 +6,7 @@ use TheCoder\World\Repositories\CityRepository;
 use TheCoder\World\Repositories\ContinentRepository;
 use TheCoder\World\Repositories\CountryRepository;
 use TheCoder\World\Repositories\ProvinceRepository;
+use TheCoder\World\Repositories\RegionRepository;
 use TheCoder\World\Repositories\RepositoryFactory;
 
 class World
@@ -27,6 +28,13 @@ class World
         $countryRepository = $this->repositoryFactory->getCountryRepository();
         $countryRepository->setCountry($country);
         return $countryRepository;
+    }
+
+    public function regions(int|string|null $region = null): RegionRepository
+    {
+        $regionRepository = $this->repositoryFactory->getRegionRepository();
+        $regionRepository->setRegion($region);
+        return $regionRepository;
     }
 
     public function provinces(int|string|null $province = null): ProvinceRepository

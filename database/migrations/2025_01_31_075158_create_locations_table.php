@@ -8,13 +8,13 @@ use \Illuminate\Support\Facades\DB;
 return new class extends Migration {
 
     private string $tableName;
-
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function __construct()
     {
         $this->tableName = config('world.table_name');
+    }
+
+    public function up(): void
+    {
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->id();
             $table->foreignId('continent_id')->nullable()->constrained($this->tableName);
@@ -36,9 +36,6 @@ return new class extends Migration {
       DB::statement("ALTER TABLE $this->tableName ADD COLUMN area MULTIPOLYGON NULL after center");
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists($this->tableName);
