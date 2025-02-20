@@ -7,7 +7,7 @@ use TheCoder\World\LocationType;
 
 class Repository
 {
-    use MySqlRepository;
+    use LocationRepository;
 
     public function __construct(
         protected LocationFactory   $locationFactory = new LocationFactory(),

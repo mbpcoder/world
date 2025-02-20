@@ -15,7 +15,7 @@ trait LocationRepository
 
     protected function getNewQuery(): Builder
     {
-        return DB::table(config('world.table_name'));
+        return $this->query = DB::table(config('world.table_name'))->where('type', $this->locationType->value);
     }
 
     protected function hasWhereConditions(): bool
@@ -32,7 +32,9 @@ trait LocationRepository
         if (config('world.cache.enabled')) {
             $cacheKey = $this->makeCacheKey($this->query, __FUNCTION__);
             $result = $this->cacheGet($cacheKey);
-            if ($result !== null) return $result;
+            if ($result !== null) {
+                return $result;
+            }
         }
 
         $entities = $this->query->get();
@@ -52,7 +54,9 @@ trait LocationRepository
         if (config('world.cache.enabled')) {
             $cacheKey = $this->makeCacheKey($this->query, __FUNCTION__);
             $result = $this->cacheGet($cacheKey);
-            if ($result !== null) return $result;
+            if ($result !== null) {
+                return $result;
+            }
         }
 
         $entity = $this->query->get()->first();
@@ -69,7 +73,9 @@ trait LocationRepository
         if (config('world.cache.enabled')) {
             $cacheKey = $this->makeCacheKey($this->query, __FUNCTION__);
             $result = $this->cacheGet($cacheKey);
-            if ($result !== null) return $result;
+            if ($result !== null) {
+                return $result;
+            }
         }
 
         $count = $this->query->count();
@@ -109,6 +115,12 @@ trait LocationRepository
         return $this;
     }
 
+    public function regionIdEqual(int $regionId): self
+    {
+        $this->query->where("region_id", $regionId);
+        return $this;
+    }
+
     public function provinceIdEqual(int $provinceId): self
     {
         $this->query->where("province_id", $provinceId);
@@ -144,15 +156,4 @@ trait LocationRepository
     {
         return config('world.cache.prefix') . md5($functionName . $query->toRawSql());
     }
-
-//    protected function where(string $column, string|int|null|bool $operator = null, string|int|null|bool $value = null): self
-//    {
-//        if ($value === null) {
-//            $value = $operator;
-//            $operator = '=';
-//        }
-//
-//        $this->query->where($column, $operator, $englishName);
-//        return $this;
-//    }
 }
