@@ -11,7 +11,10 @@ class WorldLocationTableSeeder extends Seeder
     public function run()
     {
         $tableName = config('world.table_name');
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table($tableName)->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $data = $this->loadData();
 
