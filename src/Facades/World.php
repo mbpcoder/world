@@ -20,13 +20,15 @@ use TheCoder\World\Repositories\RegionRepository;
  * @method static first()
  * @method static count()
  * @method static byId(int $id)
- * @method static byIds(array $ids)
- * @method static byEnglishName(string $englishName)
- * @method static byNativeName(string $nativeName)
  * @method static byContinentId(int $continentId)
  * @method static byCountryId(int $countryId)
  * @method static byRegionId(int $regionId)
  * @method static byProvinceId(int $provinceId)
+ * @method static byIds(array $ids)
+ * @method static byEnglishName(string $englishName)
+ * @method static byEnglishNames(array $englishNames)
+ * @method static byNativeName(string $nativeName)
+ * @method static byNativeNames(array $nativeNames)
  *
  * @see \TheCoder\World\World
  */

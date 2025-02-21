@@ -128,24 +128,6 @@ trait LocationRepository
         return $this;
     }
 
-    public function byIds(array $ids): self
-    {
-        $this->query->whereIn('id', $ids);
-        return $this;
-    }
-
-    public function byEnglishName(string $englishName): self
-    {
-        $this->query->where('english_name', $englishName);
-        return $this;
-    }
-
-    public function byNativeName(string $nativeName): self
-    {
-        $this->query->where("native_name", $nativeName);
-        return $this;
-    }
-
     public function byContinentId(int $continentId): self
     {
         $this->query->where("continent_id", $continentId);
@@ -167,6 +149,36 @@ trait LocationRepository
     public function byProvinceId(int $provinceId): self
     {
         $this->query->where("province_id", $provinceId);
+        return $this;
+    }
+
+    public function byIds(array $ids): self
+    {
+        $this->query->whereIn('id', $ids);
+        return $this;
+    }
+
+    public function byEnglishName(string $englishName): self
+    {
+        $this->query->where('english_name', $englishName);
+        return $this;
+    }
+
+    public function byEnglishNames(array $englishNames): self
+    {
+        $this->query->whereIN('english_name', $englishNames);
+        return $this;
+    }
+
+    public function byNativeName(string $nativeName): self
+    {
+        $this->query->where("native_name", $nativeName);
+        return $this;
+    }
+
+    public function byNativeNames(array $nativeNames): self
+    {
+        $this->query->whereIn("native_name", $nativeNames);
         return $this;
     }
 }
