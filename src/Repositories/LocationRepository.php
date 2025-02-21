@@ -154,6 +154,13 @@ trait LocationRepository
 
     protected function makeCacheKey(Builder $query, string $functionName): string
     {
-        return config('world.cache.prefix') . md5($functionName . $query->toRawSql());
+        if (method_exists($query, 'toRawSql')) {
+            $sql = md5($functionName . $query->toRawSql());
+        }else{
+            $sql = $query->toSql();
+            $bindings = $query->getBindings();
+            $sql = str_replace(['?'], $bindings, $sql);
+        }
+        return config('world.cache.prefix') . md5($functionName . $sql);
     }
 }
