@@ -13,11 +13,11 @@ trait AccessRegion
         $location = $this->getLocation();
 
         if ($location !== null) {
-            $regionRepository->idEqual($location->continentId);
+            $regionRepository->byId($location->continentId);
         } elseif ($this->hasWhereConditions()) {
             $location = $this->first();
             $this->setLocation($location);
-            $regionRepository->idEqual($location->continentId);
+            $regionRepository->byId($location->continentId);
         }
         return $regionRepository;
     }

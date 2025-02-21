@@ -23,8 +23,8 @@ class CityRepository extends Repository
     {
         if ($city !== null) {
             match (true) {
-                is_int($city) => $this->idEqual($city),
-                is_string($city) => $this->englishNameEqual($city),
+                is_int($city) => $this->byId($city),
+                is_string($city) => $this->byEnglishName($city),
                 $city instanceof Location => $this->city = $city,
             };
         }

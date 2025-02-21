@@ -14,11 +14,11 @@ trait AccessCountry
         $location = $this->getLocation();
 
         if ($location !== null) {
-            $countryRepository->idEqual($location->countryId);
+            $countryRepository->byId($location->countryId);
         } elseif ($this->hasWhereConditions()) {
             $location = $this->first();
             $this->setLocation($location);
-            $countryRepository->idEqual($location->countryId);
+            $countryRepository->byId($location->countryId);
         }
         return $countryRepository;
     }

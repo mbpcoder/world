@@ -18,7 +18,7 @@ trait AccessCountries
         }
 
         if ($location !== null) {
-            $countryRepository->continentIdEqual($location->id);
+            $countryRepository->byContinentId($location->id);
         }
         return $countryRepository;
     }

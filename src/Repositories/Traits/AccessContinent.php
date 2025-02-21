@@ -14,11 +14,11 @@ trait AccessContinent
         $location = $this->getLocation();
 
         if ($location !== null) {
-            $continentRepository->idEqual($location->continentId);
+            $continentRepository->byId($location->continentId);
         } elseif ($this->hasWhereConditions()) {
             $location = $this->first();
             $this->setLocation($location);
-            $continentRepository->idEqual($location->continentId);
+            $continentRepository->byId($location->continentId);
         }
         return $continentRepository;
     }

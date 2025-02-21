@@ -6,12 +6,14 @@ use Illuminate\Support\Facades\Cache;
 use TheCoder\World\Repositories\CityRepository;
 use TheCoder\World\Repositories\ContinentRepository;
 use TheCoder\World\Repositories\CountryRepository;
+use TheCoder\World\Repositories\LocationRepository;
 use TheCoder\World\Repositories\ProvinceRepository;
 use TheCoder\World\Repositories\RegionRepository;
 use TheCoder\World\Repositories\RepositoryFactory;
 
 class World
 {
+    use LocationRepository;
 
     public function __construct(private readonly RepositoryFactory $repositoryFactory = new RepositoryFactory())
     {

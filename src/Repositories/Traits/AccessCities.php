@@ -21,10 +21,10 @@ trait AccessCities
 
         if ($location !== null) {
             match ($this->locationType) {
-                LocationType::CONTINENT => $cityRepository->continentIdEqual($location->id),
-                LocationType::COUNTRY => $cityRepository->countryIdEqual($location->id),
-                LocationType::REGION => $cityRepository->regionIdEqual($location->id),
-                LocationType::PROVINCE => $cityRepository->provinceIdEqual($location->id),
+                LocationType::CONTINENT => $cityRepository->byContinentId($location->id),
+                LocationType::COUNTRY => $cityRepository->byCountryId($location->id),
+                LocationType::REGION => $cityRepository->byRegionId($location->id),
+                LocationType::PROVINCE => $cityRepository->byProvinceId($location->id),
             };
         }
         return $cityRepository;

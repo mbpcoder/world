@@ -24,8 +24,8 @@ class RegionRepository extends Repository
     {
         if ($region !== null) {
             match (true) {
-                is_int($region) => $this->idEqual($region),
-                is_string($region) => $this->englishNameEqual($region),
+                is_int($region) => $this->byId($region),
+                is_string($region) => $this->byEnglishName($region),
                 $region instanceof Location => $this->region = $region,
             };
         }

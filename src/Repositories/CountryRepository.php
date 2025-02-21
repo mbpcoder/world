@@ -26,8 +26,8 @@ class CountryRepository extends Repository
     {
         if ($country !== null) {
             match (true) {
-                is_int($country) => $this->idEqual($country),
-                is_string($country) => $this->englishNameEqual($country),
+                is_int($country) => $this->byId($country),
+                is_string($country) => $this->byEnglishName($country),
                 $country instanceof Location => $this->country = $country,
             };
         }

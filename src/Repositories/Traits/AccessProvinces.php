@@ -19,9 +19,9 @@ trait AccessProvinces
 
         if ($location !== null) {
             match ($this->locationType) {
-                LocationType::CONTINENT => $provinceRepository->continentIdEqual($location->id),
-                LocationType::COUNTRY => $provinceRepository->countryIdEqual($location->id),
-                LocationType::REGION => $provinceRepository->regionIdEqual($location->id)
+                LocationType::CONTINENT => $provinceRepository->byContinentId($location->id),
+                LocationType::COUNTRY => $provinceRepository->byCountryId($location->id),
+                LocationType::REGION => $provinceRepository->byRegionId($location->id)
             };
         }
         return $provinceRepository;

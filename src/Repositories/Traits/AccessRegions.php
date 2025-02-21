@@ -19,8 +19,8 @@ trait AccessRegions
 
         if ($location !== null) {
             match ($this->locationType) {
-                LocationType::CONTINENT => $regionRepository->continentIdEqual($location->id),
-                LocationType::COUNTRY => $regionRepository->countryIdEqual($location->id),
+                LocationType::CONTINENT => $regionRepository->byContinentId($location->id),
+                LocationType::COUNTRY => $regionRepository->byCountryId($location->id),
             };
         }
         return $regionRepository;

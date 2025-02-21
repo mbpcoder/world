@@ -24,8 +24,8 @@ class ProvinceRepository extends Repository
     {
         if ($province !== null) {
             match (true) {
-                is_int($province) => $this->idEqual($province),
-                is_string($province) => $this->englishNameEqual($province),
+                is_int($province) => $this->byId($province),
+                is_string($province) => $this->byEnglishName($province),
                 $province instanceof Location => $this->province = $province,
             };
         }

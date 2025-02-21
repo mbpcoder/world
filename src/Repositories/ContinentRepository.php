@@ -23,8 +23,8 @@ class ContinentRepository extends Repository
     {
         if ($continent !== null) {
             match (true) {
-                is_int($continent) => $this->idEqual($continent),
-                is_string($continent) => $this->englishNameEqual($continent),
+                is_int($continent) => $this->byId($continent),
+                is_string($continent) => $this->byEnglishName($continent),
                 $continent instanceof Location => $this->continent = $continent,
             };
         }

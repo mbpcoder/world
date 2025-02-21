@@ -13,11 +13,11 @@ trait AccessProvince
         $location = $this->getLocation();
 
         if ($location !== null) {
-            $provinceRepository->idEqual($location->provinceId);
+            $provinceRepository->byId($location->provinceId);
         } elseif ($this->hasWhereConditions()) {
             $location = $this->first();
             $this->setLocation($location);
-            $provinceRepository->idEqual($location->provinceId);
+            $provinceRepository->byId($location->provinceId);
         }
         return $provinceRepository;
     }

@@ -85,9 +85,17 @@ $countries = $world->countries()->get();
 ```php
 $asia = World::continents('Asia')->first();
 
-$asia = World::continents()->englishNameEqual('Asia')->first();  
+$location = World::byId(1)->first();
 
-$asiaCountries = World::continents()->englishNameEqual('Asia')->countries()->get();  
+$location = World::byIds([1,2])->get();
+
+$location = World::byEnglishName('Asia')->first();
+
+$location = World::count();
+
+$asia = World::continents()->byEnglishName('Asia')->first();  
+
+$asiaCountries = World::continents()->byEnglishName('Asia')->countries()->get();  
 ```
 
 ### Get Provinces & Cities
@@ -95,11 +103,11 @@ $asiaCountries = World::continents()->englishNameEqual('Asia')->countries()->get
 ```php
 $iranProvinces = World::countries('Iran')->provinces()->get();
 
-$iranProvinces = World::countries()->englishNameEqual('Iran')->provinces()->get();
+$iranProvinces = World::countries()->byEnglishName('Iran')->provinces()->get();
 
 $gilanCities = World::provinces('Gilan')->cities()->get();  
   
-$gilanCities = World::provinces()->englishNameEqual('Gilan')->cities()->get();  
+$gilanCities = World::provinces()->byEnglishName('Gilan')->cities()->get();  
 ```
 
 ---
