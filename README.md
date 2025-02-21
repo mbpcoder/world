@@ -80,18 +80,24 @@ $continents = $world->continents()->get();
 $countries = $world->countries()->get();  
 ```
 
+### Get Locations
+
+```php
+$location = World::byId(1)->first();
+
+$location = World::byEnglishName('Asia')->first();
+
+$locations = World::byIds([1,2])->get();
+
+$locations = World::byEnglishNames(['Iraq', 'Iran'])->get();
+
+$location = World::count();  
+```
+
 ### Get Countries by Continent
 
 ```php
 $asia = World::continents('Asia')->first();
-
-$location = World::byId(1)->first();
-
-$location = World::byIds([1,2])->get();
-
-$location = World::byEnglishName('Asia')->first();
-
-$location = World::count();
 
 $asia = World::continents()->byEnglishName('Asia')->first();  
 
