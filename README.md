@@ -9,7 +9,7 @@
 ✔ Get all **continents, countries, provinces, and cities**  
 ✔ Filter countries by continent  
 ✔ Retrieve provinces and cities for any country  
-✔ Optimized for **high performance** with caching
+✔ Optimized for **high performance** with caching  
 ✔ Compatible with **Laravel and PHP**  
 ✔ Includes **migrations and seeding** for easy setup  
 ✔ includes a Laravel Facade for simpler usage!
