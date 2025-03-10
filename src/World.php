@@ -9,15 +9,13 @@ use TheCoder\World\Repositories\CountryRepository;
 use TheCoder\World\Repositories\LocationRepository;
 use TheCoder\World\Repositories\ProvinceRepository;
 use TheCoder\World\Repositories\RegionRepository;
+use TheCoder\World\Repositories\Repository;
 use TheCoder\World\Repositories\RepositoryFactory;
 
-class World
+class World extends Repository
 {
-    use LocationRepository;
 
-    public function __construct(private readonly RepositoryFactory $repositoryFactory = new RepositoryFactory())
-    {
-    }
+    protected LocationType|null $locationType = null;
 
     public function continents(int|string|null $continent = null): ContinentRepository
     {

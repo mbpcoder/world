@@ -2,7 +2,9 @@
 
 namespace TheCoder\World\Facades;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
+use TheCoder\World\Location;
 use TheCoder\World\Repositories\CityRepository;
 use TheCoder\World\Repositories\ContinentRepository;
 use TheCoder\World\Repositories\CountryRepository;
@@ -16,19 +18,19 @@ use TheCoder\World\Repositories\RegionRepository;
  * @method static RegionRepository regions(int|string|null $region = null)
  * @method static CityRepository cities(int|string|null $city = null)
  * @method static void clearCache()
- * @method static get()
- * @method static first()
- * @method static count()
- * @method static byId(int $id)
- * @method static byContinentId(int $continentId)
- * @method static byCountryId(int $countryId)
- * @method static byRegionId(int $regionId)
- * @method static byProvinceId(int $provinceId)
- * @method static byIds(array $ids)
- * @method static byEnglishName(string $englishName)
- * @method static byEnglishNames(array $englishNames)
- * @method static byNativeName(string $nativeName)
- * @method static byNativeNames(array $nativeNames)
+ * @method static Collection get()
+ * @method static Location|null first()
+ * @method static int count()
+ * @method static self byId(int $id)
+ * @method static self byContinentId(int $continentId)
+ * @method static self byCountryId(int $countryId)
+ * @method static self byRegionId(int $regionId)
+ * @method static self byProvinceId(int $provinceId)
+ * @method static self byIds(array $ids)
+ * @method static self byEnglishName(string $englishName)
+ * @method static self byEnglishNames(array $englishNames)
+ * @method static self byNativeName(string $nativeName)
+ * @method static self byNativeNames(array $nativeNames)
  *
  * @see \TheCoder\World\World
  */

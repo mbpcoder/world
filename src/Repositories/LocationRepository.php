@@ -15,7 +15,11 @@ trait LocationRepository
 
     protected function getNewQuery(): Builder
     {
-        return $this->query = DB::table(config('world.table_name'))->where('type', $this->locationType->value);
+        $this->query = DB::table(config('world.table_name'));
+        if ($this->locationType !== null) {
+            $this->query->where('type', $this->locationType->value);
+        }
+        return $this->query;
     }
 
     protected function hasWhereConditions(): bool
