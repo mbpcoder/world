@@ -3,6 +3,7 @@
 namespace TheCoder\World\Seeders;
 
 use Illuminate\Support\Facades\DB;
+use TheCoder\World\Facades\World;
 use TheCoder\World\Spatial\Point;
 use Illuminate\Database\Seeder;
 
@@ -51,6 +52,8 @@ class WorldLocationTableSeeder extends Seeder
 
             DB::table($tableName)->insert($insertData);
         }
+
+        World::clearCache();
     }
 
     protected function loadData(): array

@@ -57,7 +57,7 @@ class World extends Repository
         return $cityRepository;
     }
 
-    public function clearCache()
+    public function clearCache(): void
     {
         if (config('world.cache.enabled')) {
             if (Cache::supportsTags()) {
