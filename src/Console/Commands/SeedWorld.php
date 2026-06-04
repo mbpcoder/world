@@ -15,6 +15,11 @@ class SeedWorld extends Command
     {
         $this->info('Seeding World data...');
 
+        $localPath = database_path('seeders/countries+states+cities.json');
+        if (!file_exists($localPath)) {
+            $this->info('Downloading data from ' . config('world.data_url') . ' ...');
+        }
+
         Artisan::call('db:seed', [
             '--class' => WorldLocationTableSeeder::class,
             '--force' => true,

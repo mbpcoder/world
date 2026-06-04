@@ -1,3 +1,5 @@
 /vendor
 /.idea
 /.phpunit.result.cache
+/database/seeders/countries+states+cities.json
+/database/seeders/locations.json
