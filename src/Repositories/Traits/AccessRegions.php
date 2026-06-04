@@ -9,7 +9,7 @@ trait AccessRegions
 {
     public function regions(): RegionRepository
     {
-        $regionRepository = $this->repositoryFactory->getCityRepository();
+        $regionRepository = $this->repositoryFactory->getRegionRepository();
 
         $location = $this->getLocation();
 

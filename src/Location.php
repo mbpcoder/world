@@ -10,6 +10,7 @@ class Location
     public int $id;
     public int|null $continentId;
     public int|null $countryId;
+    public int|null $regionId;
     public int|null $provinceId;
     public string|null $isoCode;
     public LocationType $type;

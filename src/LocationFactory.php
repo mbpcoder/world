@@ -14,6 +14,7 @@ class LocationFactory
         $location->id = $entity->id ?? null;
         $location->continentId = $entity->continent_id ?? null;
         $location->countryId = $entity->country_id ?? null;
+        $location->regionId = $entity->region_id ?? null;
         $location->provinceId = $entity->province_id ?? null;
         $location->isoCode = $entity->iso_code ?? null;
         $location->type = LocationType::from($entity->type);
