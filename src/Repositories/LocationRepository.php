@@ -101,7 +101,7 @@ trait LocationRepository
         }
 
         $entity = $this->query->get()->first();
-        $location = $this->locationFactory->make($entity);
+        $location = $entity !== null ? $this->locationFactory->make($entity) : null;
 
         $this->cachePut($cacheKey, $location);
 

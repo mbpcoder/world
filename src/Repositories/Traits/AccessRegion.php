@@ -12,13 +12,15 @@ trait AccessRegion
 
         $location = $this->getLocation();
 
-        if ($location !== null) {
-            $regionRepository->byId($location->regionId);
-        } elseif ($this->hasWhereConditions()) {
+        if ($location === null && $this->hasWhereConditions()) {
             $location = $this->first();
-            $this->setLocation($location);
-            $regionRepository->byId($location->regionId);
+            if ($location !== null) {
+                $this->setLocation($location);
+            }
         }
+
+        $regionRepository->byId($location?->regionId ?? 0);
+
         return $regionRepository;
     }
 }

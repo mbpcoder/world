@@ -12,13 +12,15 @@ trait AccessProvince
 
         $location = $this->getLocation();
 
-        if ($location !== null) {
-            $provinceRepository->byId($location->provinceId);
-        } elseif ($this->hasWhereConditions()) {
+        if ($location === null && $this->hasWhereConditions()) {
             $location = $this->first();
-            $this->setLocation($location);
-            $provinceRepository->byId($location->provinceId);
+            if ($location !== null) {
+                $this->setLocation($location);
+            }
         }
+
+        $provinceRepository->byId($location?->provinceId ?? 0);
+
         return $provinceRepository;
     }
 }

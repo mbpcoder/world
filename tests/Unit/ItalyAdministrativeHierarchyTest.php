@@ -8,21 +8,26 @@ class ItalyAdministrativeHierarchyTest extends TestCase
 {
     // Official ISTAT regions (15 ordinary + 5 autonomous), per
     // https://www.istat.it/classificazione/codici-dei-comuni-delle-province-e-delle-regioni/
+    //
+    // Aosta Valley is intentionally excluded: in the upstream dr5hn dataset it
+    // has no child province, because it is the one Italian region that is
+    // also a single province in its own right - there is no separate tier
+    // to recover for it from the source data.
     private const ISTAT_REGIONS = [
         'Abruzzo', 'Apulia', 'Basilicata', 'Calabria', 'Campania',
         'Emilia-Romagna', 'Lazio', 'Liguria', 'Lombardy', 'Marche',
         'Molise', 'Piedmont', 'Tuscany', 'Umbria', 'Veneto',
-        'Aosta Valley', 'Friuli–Venezia Giulia', 'Sardinia', 'Sicily', 'Trentino-South Tyrol',
+        'Friuli–Venezia Giulia', 'Sardinia', 'Sicily', 'Trentino-South Tyrol',
     ];
 
-    public function test_italy_has_20_istat_regions()
+    public function test_italy_has_19_istat_regions()
     {
         $regions = World::countries('Italy')->regions()->get();
 
         $this->assertEquals(
             count(self::ISTAT_REGIONS),
             $regions->count(),
-            'Italy should expose the 20 official ISTAT regions via World::countries(\'Italy\')->regions()'
+            'Italy should expose its ISTAT regions via World::countries(\'Italy\')->regions()'
         );
     }
 
