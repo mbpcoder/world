@@ -54,6 +54,14 @@ php artisan world:seed
 
 This will populate the database with continents, countries, provinces, and cities.
 
+The data is downloaded once from [`dr5hn/countries-states-cities-database`](https://github.com/dr5hn/countries-states-cities-database) and cached locally in `database/seeders/countries+states+cities.json`. Re-running `world:seed` upserts records by a stable `source_id`, so existing rows keep their `id` — safe to run again after the upstream data changes.
+
+To pull the latest upstream data instead of reusing the local cache:
+
+```sh
+php artisan world:seed --fresh-data
+```
+
 ---
 
 ## 🔍 Usage
