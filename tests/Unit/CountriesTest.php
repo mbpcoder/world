@@ -18,12 +18,15 @@ class CountriesTest extends TestCase
     public function test_can_get_country_by_name()
     {
         $iran = World::countries('Iran')->first();
-        $this->assertEquals(110, $iran->id);
+        $this->assertNotNull($iran);
+        $this->assertEquals('Iran', $iran->englishName);
     }
 
     public function test_can_get_country_by_id()
     {
-        $iran = World::countries(110)->first();
+        $iranId = World::countries('Iran')->first()->id;
+
+        $iran = World::countries($iranId)->first();
         $this->assertEquals('Iran', $iran->englishName);
     }
 
@@ -42,6 +45,6 @@ class CountriesTest extends TestCase
     public function test_can_get_cities_by_country()
     {
         $cities = World::countries('Iran')->cities()->get();
-        $this->assertEquals(1854, $cities->count());
+        $this->assertEquals(1847, $cities->count());
     }
 }

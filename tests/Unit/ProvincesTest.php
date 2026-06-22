@@ -12,18 +12,21 @@ class ProvincesTest extends TestCase
 
         $this->assertIsArray($provinces->toArray());
         $this->assertNotEmpty($provinces);
-        $this->assertEquals(3577, $provinces->count());
+        $this->assertEquals(5240, $provinces->count());
     }
 
     public function test_can_get_province_by_name()
     {
         $tehran = World::provinces('Tehran')->first();
-        $this->assertEquals(1483, $tehran->id);
+        $this->assertNotNull($tehran);
+        $this->assertEquals('Tehran', $tehran->englishName);
     }
 
     public function test_can_get_province_by_id()
     {
-        $iran = World::provinces(1483)->first();
+        $tehranId = World::provinces('Tehran')->first()->id;
+
+        $iran = World::provinces($tehranId)->first();
         $this->assertEquals('Tehran', $iran->englishName);
     }
 

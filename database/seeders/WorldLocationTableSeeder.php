@@ -326,7 +326,12 @@ class WorldLocationTableSeeder extends Seeder
         if (($country->region ?? '') === 'Americas') {
             return ($country->subregion ?? '') === 'South America' ? 'SA' : 'NA';
         }
-        return $country->region ?? 'Unknown';
+
+        // A handful of uninhabited sub-Antarctic territories (e.g. Bouvet
+        // Island, Heard Island and McDonald Islands) carry an empty region
+        // in dr5hn's data rather than "Polar"; group them with Antarctica
+        // instead of letting them create their own bogus continent.
+        return $country->region ?: 'Polar';
     }
 
     private function continentSourceId(object $country): string
