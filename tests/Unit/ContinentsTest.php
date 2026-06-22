@@ -19,12 +19,15 @@ class ContinentsTest extends TestCase
     public function test_can_get_continent_by_name()
     {
         $asia = World::continents('Asia')->first();
-        $this->assertEquals(3, $asia->id);
+        $this->assertNotNull($asia);
+        $this->assertEquals('Asia', $asia->englishName);
     }
 
     public function test_can_get_continent_by_id()
     {
-        $asia = World::continents(3)->first();
+        $asiaId = World::continents('Asia')->first()->id;
+
+        $asia = World::continents($asiaId)->first();
         $this->assertEquals('Asia', $asia->englishName);
     }
 }

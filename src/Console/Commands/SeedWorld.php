@@ -16,13 +16,22 @@ class SeedWorld extends Command
         $this->info('Seeding World data...');
 
         $localPath = database_path('seeders/countries+states+cities.json');
+        $statesMetadataPath = database_path('seeders/states.json');
 
-        if ($this->option('fresh-data') && file_exists($localPath)) {
-            unlink($localPath);
+        if ($this->option('fresh-data')) {
+            if (file_exists($localPath)) {
+                unlink($localPath);
+            }
+            if (file_exists($statesMetadataPath)) {
+                unlink($statesMetadataPath);
+            }
         }
 
         if (!file_exists($localPath)) {
             $this->info('Downloading data from ' . config('world.data_url') . ' ...');
+        }
+        if (!file_exists($statesMetadataPath)) {
+            $this->info('Downloading states metadata from ' . config('world.states_data_url') . ' ...');
         }
 
         Artisan::call('db:seed', [

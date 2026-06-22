@@ -15,7 +15,10 @@ abstract class TestCase extends Orchestra
         parent::setUp();
 
         if (!static::$migrated) {
-            $this->artisan('migrate')->run();
+            // Use a fresh migration rather than `migrate` so stale rows left
+            // over in a persistent local test database by a previous run
+            // (e.g. before a seeder bug fix) can never leak into this one.
+            $this->artisan('migrate:fresh')->run();
             $this->artisan('world:seed')->run();
             $this->artisan('cache:clear');
             static::$migrated = true;

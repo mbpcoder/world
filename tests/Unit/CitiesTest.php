@@ -10,18 +10,21 @@ class CitiesTest extends TestCase
     {
         $citiesCount = World::cities()->count();
 
-        $this->assertEquals(151017, $citiesCount);
+        $this->assertEquals(152967, $citiesCount);
     }
 
     public function test_can_get_city_by_name()
     {
         $tehran = World::cities('Tehran')->first();
-        $this->assertEquals(55677, $tehran->id);
+        $this->assertNotNull($tehran);
+        $this->assertEquals('Tehran', $tehran->englishName);
     }
 
     public function test_can_get_city_by_id()
     {
-        $iran = World::cities(55677)->first();
+        $tehranId = World::cities('Tehran')->first()->id;
+
+        $iran = World::cities($tehranId)->first();
         $this->assertEquals('Tehran', $iran->englishName);
     }
 

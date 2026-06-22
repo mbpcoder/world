@@ -3,3 +3,4 @@
 /.phpunit.result.cache
 /database/seeders/countries+states+cities.json
 /database/seeders/locations.json
+/database/seeders/states.json

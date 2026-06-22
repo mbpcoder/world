@@ -27,10 +27,11 @@ class WorldLocationTableSeeder extends Seeder
         $this->tableName = config('world.table_name');
 
         $data = $this->loadData();
+        [$stateMetadata, $regionStateIds] = $this->loadStatesMetadata();
 
         $continentIdMap = $this->seedContinents($data);
         $countryIdMap   = $this->seedCountries($data, $continentIdMap);
-        $this->seedProvincesAndCities($data, $continentIdMap, $countryIdMap);
+        $this->seedProvincesAndCities($data, $continentIdMap, $countryIdMap, $stateMetadata, $regionStateIds);
 
         World::clearCache();
     }
@@ -120,7 +121,51 @@ class WorldLocationTableSeeder extends Seeder
             ->toArray();
     }
 
-    private function seedProvincesAndCities(array $data, array $continentIdMap, array $countryIdMap): void
+    /**
+     * Some countries (e.g. Italy, Brazil, France, Ecuador) have a two-tier
+     * subdivision: a top-level "region" containing several "provinces".
+     * dr5hn's bundled countries+states+cities.json flattens both tiers into
+     * a single "states" list, so we cross-reference dr5hn's separate
+     * states.json (which carries level/parent_id) to recover the split.
+     *
+     * @return array{0: array<int, object>, 1: array<int, true>} [stateId => metadata, regionStateId => true]
+     */
+    private function loadStatesMetadata(): array
+    {
+        $localPath = __DIR__ . '/states.json';
+
+        if (!file_exists($localPath)) {
+            $url = config('world.states_data_url');
+            if (!$url) {
+                throw new \RuntimeException('world.states_data_url is not configured.');
+            }
+            if (!copy($url, $localPath)) {
+                throw new \RuntimeException("Failed to download states metadata from: {$url}");
+            }
+        }
+
+        $states = json_decode(file_get_contents($localPath));
+
+        $metadata = [];
+        $childrenOf = [];
+        foreach ($states as $state) {
+            $metadata[$state->id] = $state;
+            if (!empty($state->parent_id)) {
+                $childrenOf[(int) $state->parent_id] = true;
+            }
+        }
+
+        $regionStateIds = [];
+        foreach ($metadata as $id => $state) {
+            if (($state->level ?? null) === '1' && isset($childrenOf[$id])) {
+                $regionStateIds[$id] = true;
+            }
+        }
+
+        return [$metadata, $regionStateIds];
+    }
+
+    private function seedProvincesAndCities(array $data, array $continentIdMap, array $countryIdMap, array $stateMetadata, array $regionStateIds): void
     {
         foreach ($data as $country) {
             if (empty($country->states)) {
@@ -132,13 +177,63 @@ class WorldLocationTableSeeder extends Seeder
             $timezone    = $country->timezones[0]->zoneName ?? null;
             $capital     = $country->capital ?? null;
 
-            $provinceRecords = [];
+            $regionStates = [];
+            $provinceStates = [];
             foreach ($country->states as $state) {
+                if (isset($regionStateIds[$state->id])) {
+                    $regionStates[] = $state;
+                } else {
+                    $provinceStates[] = $state;
+                }
+            }
+
+            $regionIdMap = [];
+            if (!empty($regionStates)) {
+                $regionRecords = [];
+                foreach ($regionStates as $state) {
+                    $regionRecords[] = [
+                        'source_id'    => 'state:' . $state->id,
+                        'continent_id' => $continentId,
+                        'country_id'   => $countryId,
+                        'region_id'    => null,
+                        'province_id'  => null,
+                        'iso_code'     => null,
+                        'type'         => 'region',
+                        'english_name' => $state->name,
+                        'native_name'  => $state->name,
+                        'timezone'     => $timezone,
+                        'is_capital'   => false,
+                        'center'       => $this->makePoint($state->latitude ?? null, $state->longitude ?? null),
+                        'area'         => null,
+                        'priority'     => 0,
+                    ];
+                }
+
+                DB::table($this->tableName)->upsert(
+                    $regionRecords,
+                    ['source_id'],
+                    ['continent_id', 'country_id', 'type', 'english_name', 'native_name', 'timezone', 'center']
+                );
+
+                $regionSourceIds = array_column($regionRecords, 'source_id');
+                $regionIdMap = DB::table($this->tableName)
+                    ->whereIn('source_id', $regionSourceIds)
+                    ->pluck('id', 'source_id')
+                    ->toArray();
+            }
+
+            $provinceRecords = [];
+            $stateRegionId = [];
+            foreach ($provinceStates as $state) {
+                $parentId = $stateMetadata[$state->id]->parent_id ?? null;
+                $regionId = $parentId !== null ? ($regionIdMap['state:' . $parentId] ?? null) : null;
+                $stateRegionId[$state->id] = $regionId;
+
                 $provinceRecords[] = [
                     'source_id'    => 'state:' . $state->id,
                     'continent_id' => $continentId,
                     'country_id'   => $countryId,
-                    'region_id'    => null,
+                    'region_id'    => $regionId,
                     'province_id'  => null,
                     'iso_code'     => null,
                     'type'         => 'province',
@@ -155,7 +250,7 @@ class WorldLocationTableSeeder extends Seeder
             DB::table($this->tableName)->upsert(
                 $provinceRecords,
                 ['source_id'],
-                ['continent_id', 'country_id', 'english_name', 'native_name', 'timezone', 'center']
+                ['continent_id', 'country_id', 'region_id', 'type', 'english_name', 'native_name', 'timezone', 'center']
             );
 
             $provinceSourceIds = array_column($provinceRecords, 'source_id');
@@ -164,16 +259,26 @@ class WorldLocationTableSeeder extends Seeder
                 ->pluck('id', 'source_id')
                 ->toArray();
 
+            // Cities are normally nested under province-level states, but a
+            // handful of countries (e.g. Belgium, Greece, Morocco, Spain)
+            // also attach cities directly to a region-level state, even
+            // though that same state has province children. Cover both.
             $cityRecords = [];
             foreach ($country->states as $state) {
-                $provinceId = $provinceIdMap['state:' . $state->id] ?? null;
+                if (isset($regionStateIds[$state->id])) {
+                    $provinceId = null;
+                    $regionId   = $regionIdMap['state:' . $state->id] ?? null;
+                } else {
+                    $provinceId = $provinceIdMap['state:' . $state->id] ?? null;
+                    $regionId   = $stateRegionId[$state->id] ?? null;
+                }
 
                 foreach ($state->cities as $city) {
                     $cityRecords[] = [
                         'source_id'    => 'city:' . $city->id,
                         'continent_id' => $continentId,
                         'country_id'   => $countryId,
-                        'region_id'    => null,
+                        'region_id'    => $regionId,
                         'province_id'  => $provinceId,
                         'iso_code'     => null,
                         'type'         => 'city',
@@ -190,7 +295,7 @@ class WorldLocationTableSeeder extends Seeder
                         DB::table($this->tableName)->upsert(
                             $cityRecords,
                             ['source_id'],
-                            ['continent_id', 'country_id', 'province_id', 'english_name', 'native_name', 'timezone', 'center', 'is_capital']
+                            ['continent_id', 'country_id', 'region_id', 'province_id', 'english_name', 'native_name', 'timezone', 'center', 'is_capital']
                         );
                         $cityRecords = [];
                     }
@@ -201,7 +306,7 @@ class WorldLocationTableSeeder extends Seeder
                 DB::table($this->tableName)->upsert(
                     $cityRecords,
                     ['source_id'],
-                    ['continent_id', 'country_id', 'province_id', 'english_name', 'native_name', 'timezone', 'center', 'is_capital']
+                    ['continent_id', 'country_id', 'region_id', 'province_id', 'english_name', 'native_name', 'timezone', 'center', 'is_capital']
                 );
             }
         }
@@ -221,7 +326,12 @@ class WorldLocationTableSeeder extends Seeder
         if (($country->region ?? '') === 'Americas') {
             return ($country->subregion ?? '') === 'South America' ? 'SA' : 'NA';
         }
-        return $country->region ?? 'Unknown';
+
+        // A handful of uninhabited sub-Antarctic territories (e.g. Bouvet
+        // Island, Heard Island and McDonald Islands) carry an empty region
+        // in dr5hn's data rather than "Polar"; group them with Antarctica
+        // instead of letting them create their own bogus continent.
+        return $country->region ?: 'Polar';
     }
 
     private function continentSourceId(object $country): string
