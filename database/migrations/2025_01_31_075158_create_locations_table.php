@@ -32,8 +32,13 @@ return new class extends Migration {
         });
 
         // Add spatial columns
-      DB::statement("ALTER TABLE $this->tableName ADD COLUMN center POINT NULL after is_capital");
-      DB::statement("ALTER TABLE $this->tableName ADD COLUMN area MULTIPOLYGON NULL after center");
+        if (DB::connection()->getDriverName() === 'pgsql') {
+            DB::statement("ALTER TABLE $this->tableName ADD COLUMN center TEXT NULL");
+            DB::statement("ALTER TABLE $this->tableName ADD COLUMN area TEXT NULL");
+        } else {
+            DB::statement("ALTER TABLE $this->tableName ADD COLUMN center POINT NULL after is_capital");
+            DB::statement("ALTER TABLE $this->tableName ADD COLUMN area MULTIPOLYGON NULL after center");
+        }
     }
 
     public function down(): void
