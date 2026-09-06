@@ -1,39 +1,39 @@
 {
-    "name": "thecoder/world",
-    "description": "World location data",
-    "type": "library",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Mahdi Bagheri",
-            "email": "thecoder.ir@gmail.com"
-        }
-    ],
-    "extra": {
-        "laravel": {
-            "providers": [
-                "TheCoder\\World\\WorldServiceProvider"
-            ]
-        }
-    },
-    "require": {
-        "php": ">=8.2",
-        "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0",
-        "illuminate/database": "^8.0|^9.0|^10.0|^11.0|^12.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^10.0",
-        "orchestra/testbench": "^8.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "TheCoder\\World\\": "src/",
-            "TheCoder\\World\\Seeders\\": "database/seeders/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "TheCoder\\World\\Tests\\": "tests"
-        }
+  "name": "thecoder/world",
+  "description": "World location data",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mahdi Bagheri",
+      "email": "thecoder.ir@gmail.com"
     }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "TheCoder\\World\\WorldServiceProvider"
+      ]
+    }
+  },
+  "require": {
+    "php": ">=8.2",
+    "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0",
+    "illuminate/database": "^8.0|^9.0|^10.0|^11.0|^12.0|^13.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.0|^11.5",
+    "orchestra/testbench": "^8.0|^9.0|^10.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "TheCoder\\World\\": "src/",
+      "TheCoder\\World\\Seeders\\": "database/seeders/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "TheCoder\\World\\Tests\\": "tests"
+    }
+  }
 }
