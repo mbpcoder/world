@@ -177,10 +177,10 @@ Ensure you have the necessary dependencies installed:
 ```bash
 composer install --dev
 ```
-### ⚠️ Database Configuration for Testing
-Due to special columns in the database, SQLite is not supported for testing.
+### Database Configuration for Testing
+The suite runs on SQLite out of the box (see `phpunit.xml`); the spatial columns are stored as WKT text there. The test database is created in your system temp directory.
 
-Instead, configure MySQL in phpunit.xml:
+To test against MySQL instead, change `phpunit.xml`:
 
 ```xml
     <php>

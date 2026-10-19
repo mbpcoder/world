@@ -318,7 +318,13 @@ class WorldLocationTableSeeder extends Seeder
             return null;
         }
         $point = new Point((float) $latitude, (float) $longitude);
-        return $point->isEmpty() ? null : $point->getSqlFromText();
+        if ($point->isEmpty()) {
+            return null;
+        }
+        // SQLite and PostgreSQL store the spatial columns as plain WKT text.
+        return in_array(DB::connection()->getDriverName(), ['pgsql', 'sqlite'])
+            ? $point->toWKT()
+            : $point->getSqlFromText();
     }
 
     private function continentKey(object $country): string

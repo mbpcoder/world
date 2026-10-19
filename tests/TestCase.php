@@ -25,6 +25,19 @@ abstract class TestCase extends Orchestra
         }
     }
 
+    protected function getEnvironmentSetUp($app)
+    {
+        // An in-memory SQLite database is recreated for every test, but the
+        // suite seeds only once, so SQLite needs a file that survives between tests.
+        $connection = $app['config']->get('database.default');
+
+        if ($app['config']->get("database.connections.$connection.driver") === 'sqlite') {
+            $path = sys_get_temp_dir() . '/world_test_database.sqlite';
+            touch($path);
+            $app['config']->set("database.connections.$connection.database", $path);
+        }
+    }
+
     protected function getPackageProviders($app)
     {
         return [WorldServiceProvider::class];

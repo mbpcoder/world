@@ -30,4 +30,14 @@ class ContinentRepository extends Repository
         }
         return $this;
     }
+
+    protected function setLocation(Location $location): void
+    {
+        $this->continent = $location;
+    }
+
+    protected function getLocation(): Location|null
+    {
+        return $this->continent;
+    }
 }
