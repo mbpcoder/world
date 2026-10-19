@@ -156,6 +156,12 @@ trait LocationRepository
         return $this;
     }
 
+    public function provinceCapitals(): self
+    {
+        $this->query->where('is_province_capital', true);
+        return $this;
+    }
+
     public function byIds(array $ids): self
     {
         $this->query->whereIn('id', $ids);
