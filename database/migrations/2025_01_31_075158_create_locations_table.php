@@ -32,7 +32,7 @@ return new class extends Migration {
         });
 
         // Add spatial columns
-        if (DB::connection()->getDriverName() === 'pgsql') {
+        if (in_array(DB::connection()->getDriverName(), ['pgsql', 'sqlite'])) {
             DB::statement("ALTER TABLE $this->tableName ADD COLUMN center TEXT NULL");
             DB::statement("ALTER TABLE $this->tableName ADD COLUMN area TEXT NULL");
         } else {
