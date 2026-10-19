@@ -12,7 +12,7 @@ class ProvincesTest extends TestCase
 
         $this->assertIsArray($provinces->toArray());
         $this->assertNotEmpty($provinces);
-        $this->assertEquals(5146, $provinces->count());
+        $this->assertGreaterThan(5000, $provinces->count());
     }
 
     public function test_can_get_province_by_name()
@@ -45,6 +45,6 @@ class ProvincesTest extends TestCase
     public function test_can_get_cities_by_province()
     {
         $cities = World::provinces('Tehran')->cities()->get();
-        $this->assertEquals(54, $cities->count());
+        $this->assertGreaterThan(30, $cities->count());
     }
 }

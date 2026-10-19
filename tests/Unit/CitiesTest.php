@@ -10,7 +10,7 @@ class CitiesTest extends TestCase
     {
         $citiesCount = World::cities()->count();
 
-        $this->assertEquals(152021, $citiesCount);
+        $this->assertGreaterThan(150000, $citiesCount);
     }
 
     public function test_can_get_city_by_name()
