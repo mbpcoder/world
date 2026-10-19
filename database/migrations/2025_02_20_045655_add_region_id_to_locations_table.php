@@ -15,14 +15,14 @@ return new class extends Migration
 
     public function up(): void
     {
-        Schema::table('locations', function (Blueprint $table) {
+        Schema::table($this->tableName, function (Blueprint $table) {
             $table->foreignId('region_id')->nullable()->after('country_id')->constrained($this->tableName);
         });
     }
 
     public function down(): void
     {
-        Schema::table('locations', function (Blueprint $table) {
+        Schema::table($this->tableName, function (Blueprint $table) {
             $table->dropForeign(['region_id']);
             $table->dropColumn('region_id');
         });
