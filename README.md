@@ -213,7 +213,8 @@ This package provides a **locations table** designed to store structured geograp
 | `english_name` | String | Location name in English |
 | `native_name` | String | Local name (optional) |
 | `timezone`  | String | Time zone (e.g., "Asia/Tehran") |
-| `is_capital` | Boolean | Marks capital cities (default: false) |
+| `is_capital` | Boolean | Marks country capital cities (default: false) |
+| `is_province_capital` | Boolean | Marks province capital cities (default: false) |
 | `priority`  | Integer | Sort priority (default: 0) |
 | `center`    | POINT | Geographic coordinates |
 | `area`      | MULTIPOLYGON | Spatial data for regions |
