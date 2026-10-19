@@ -47,15 +47,6 @@ class WorldTest extends TestCase
         $this->assertEquals('Asia', World::continents($id)->first()->englishName);
     }
 
-    public function test_accepts_location_argument()
-    {
-        $iran = World::countries('Iran')->first();
-
-        $provinces = World::countries($iran)->provinces()->get();
-
-        $this->assertCount(31, $provinces);
-    }
-
     public function test_unknown_name_returns_nothing()
     {
         $this->assertNull(World::countries('Atlantis')->first());

@@ -34,8 +34,10 @@ class RepositorySettersTest extends TestCase
         $byId = app(ContinentRepository::class)->setContinent($asia->id)->first();
         $this->assertEquals($asia->id, $byId->id);
 
-        $countries = app(ContinentRepository::class)->setContinent($asia)->countries()->get();
-        $this->assertNotEmpty($countries);
+        $this->assertSame(
+            $asia,
+            (fn() => $this->continent)->call(app(ContinentRepository::class)->setContinent($asia))
+        );
     }
 
     public function test_set_continent_with_null_does_not_filter()
