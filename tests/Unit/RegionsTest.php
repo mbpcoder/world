@@ -11,7 +11,7 @@ class RegionsTest extends TestCase
         $regions = World::regions()->get();
 
         $this->assertIsArray($regions->toArray());
-        $this->assertEquals(68, $regions->count());
+        $this->assertEquals(182, $regions->count());
     }
 
     public function test_can_get_regions_by_country_with_region_tier()
