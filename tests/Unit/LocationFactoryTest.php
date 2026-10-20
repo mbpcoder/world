@@ -23,6 +23,7 @@ class LocationFactoryTest extends TestCase
             'english_name' => 'Iran',
             'timezone' => 'Asia/Tehran',
             'is_capital' => 0,
+            'is_province_capital' => 0,
             'center' => 'POINT(32 53)',
             'area' => null,
             'priority' => 7,
@@ -70,6 +71,14 @@ class LocationFactoryTest extends TestCase
         $this->assertTrue($location->isCapital);
     }
 
+    public function test_make_flags_province_capital()
+    {
+        $location = (new LocationFactory())->make($this->entity(['is_province_capital' => 1]));
+
+        $this->assertTrue($location->isProvinceCapital);
+        $this->assertFalse($location->isCapital);
+    }
+
     public function test_make_defaults_missing_fields_to_null()
     {
         $location = (new LocationFactory())->make((object)[
@@ -77,6 +86,7 @@ class LocationFactoryTest extends TestCase
             'type' => 'city',
             'priority' => 0,
             'is_capital' => 0,
+            'is_province_capital' => 0,
             'center' => null,
         ]);
 

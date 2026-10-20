@@ -22,7 +22,7 @@ class LocationFactory
         $location->englishName = $entity->english_name ?? null;
         $location->timezone = $entity->timezone ?? null;
         $location->isCapital = $entity->is_capital === 1;
-        $location->isProvinceCapital = ($entity->is_province_capital ?? 0) === 1;
+        $location->isProvinceCapital = $entity->is_province_capital === 1;
         $point = new Point();
         if ($entity->center !== null) {
             str_contains(strtolower($entity->center), 'point') ? $point->parse($entity->center) : $point->parseBinary($entity->center);
