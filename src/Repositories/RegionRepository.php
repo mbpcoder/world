@@ -7,6 +7,7 @@ use TheCoder\World\LocationType;
 use TheCoder\World\Repositories\Traits\AccessCities;
 use TheCoder\World\Repositories\Traits\AccessContinent;
 use TheCoder\World\Repositories\Traits\AccessCountry;
+use TheCoder\World\Repositories\Traits\AccessProvinceCapitals;
 use TheCoder\World\Repositories\Traits\AccessProvinces;
 
 class RegionRepository extends Repository
@@ -16,6 +17,7 @@ class RegionRepository extends Repository
 
     use AccessCities;
     use AccessProvinces;
+    use AccessProvinceCapitals;
 
     protected Location|null $region = null;
     protected LocationType $locationType = LocationType::REGION;

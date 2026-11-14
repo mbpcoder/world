@@ -36,6 +36,8 @@ use TheCoder\World\Repositories\RegionRepository;
  */
 class World extends Facade
 {
+    protected static $cached = false;
+
     protected static function getFacadeAccessor()
     {
         return \TheCoder\World\World::class;

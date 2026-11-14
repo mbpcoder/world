@@ -32,6 +32,24 @@ class ProvinceRepository extends Repository
         return $this;
     }
 
+    public function capital(): Location|null
+    {
+        $location = $this->getLocation();
+
+        if ($location === null && $this->hasWhereConditions()) {
+            $location = $this->first();
+        }
+
+        if ($location === null) {
+            return null;
+        }
+
+        return $this->repositoryFactory->getCityRepository()
+            ->byProvinceId($location->id)
+            ->provinceCapitals()
+            ->first();
+    }
+
     protected function setLocation(Location $location): void
     {
         $this->province = $location;

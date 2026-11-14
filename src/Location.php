@@ -18,6 +18,7 @@ class Location
     public string|null $englishName;
     public string|null $timezone;
     public bool $isCapital = false;
+    public bool $isProvinceCapital = false;
     public Point|null $center;
     public MultiPolygon|null $area;
     public int $priority = 0;

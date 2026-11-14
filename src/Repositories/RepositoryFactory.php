@@ -4,14 +4,10 @@ namespace TheCoder\World\Repositories;
 
 class RepositoryFactory
 {
-    protected array $repositories = [];
-
     protected function get(string $repository)
     {
-        if (!isset($this->repositories[$repository])) {
-            $this->repositories[$repository] = app($repository);
-        }
-        return $this->repositories[$repository];
+        // Repositories hold query state, so every call needs a fresh instance.
+        return app()->make($repository);
     }
 
     public function getContinentRepository(): ContinentRepository

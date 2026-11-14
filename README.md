@@ -124,6 +124,20 @@ $gilanCities = World::provinces('Gilan')->cities()->get();
 $gilanCities = World::provinces()->byEnglishName('Gilan')->cities()->get();  
 ```
 
+### Get Province Capitals
+
+```php
+$provinceCapitals = World::provinceCapitals()->get();
+
+$asiaProvinceCapitals = World::continents('Asia')->provinceCapitals()->get();
+
+$iranProvinceCapitals = World::countries('Iran')->provinceCapitals()->get();
+
+$tehranCapital = World::provinces('Tehran')->capital();
+```
+
+Province capitals are cities with `is_province_capital = true`. The seeded data source has no province capital information, so this column is empty until you populate it.
+
 ---
 
 ## ⚡Caching for Maximum Performance
@@ -213,7 +227,8 @@ This package provides a **locations table** designed to store structured geograp
 | `english_name` | String | Location name in English |
 | `native_name` | String | Local name (optional) |
 | `timezone`  | String | Time zone (e.g., "Asia/Tehran") |
-| `is_capital` | Boolean | Marks capital cities (default: false) |
+| `is_capital` | Boolean | Marks country capital city (default: false) |
+| `is_province_capital` | Boolean | Marks province capital cities (default: false) |
 | `priority`  | Integer | Sort priority (default: 0) |
 | `center`    | POINT | Geographic coordinates |
 | `area`      | MULTIPOLYGON | Spatial data for regions |

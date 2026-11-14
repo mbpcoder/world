@@ -57,6 +57,11 @@ class World extends Repository
         return $cityRepository;
     }
 
+    public function provinceCapitals(): CityRepository
+    {
+        return $this->cities()->provinceCapitals();
+    }
+
     public function clearCache(): void
     {
         if (config('world.cache.enabled')) {
