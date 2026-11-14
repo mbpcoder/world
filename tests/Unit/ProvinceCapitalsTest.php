@@ -82,4 +82,12 @@ class ProvinceCapitalsTest extends TestCase
         $this->assertSame('Tehran', $capital->englishName);
         $this->assertTrue($capital->isProvinceCapital);
     }
+
+    public function test_capital_is_null_when_no_province_is_selected()
+    {
+        $this->markTehranAsProvinceCapital();
+
+        $this->assertNull(World::provinces()->capital());
+        $this->assertNull(World::provinces('Atlantis')->capital());
+    }
 }
