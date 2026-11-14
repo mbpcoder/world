@@ -32,6 +32,11 @@ class ProvinceRepository extends Repository
         return $this;
     }
 
+    public function capital(): CityRepository
+    {
+        return $this->cities()->provinceCapitals();
+    }
+
     protected function setLocation(Location $location): void
     {
         $this->province = $location;
