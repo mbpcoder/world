@@ -133,7 +133,7 @@ $asiaProvinceCapitals = World::continents('Asia')->provinceCapitals()->get();
 
 $iranProvinceCapitals = World::countries('Iran')->provinceCapitals()->get();
 
-$tehranCapital = World::provinces('Tehran')->capital()->first();
+$tehranCapital = World::provinces('Tehran')->capital();
 ```
 
 Province capitals are cities with `is_province_capital = true`. The seeded data source has no province capital information, so this column is empty until you populate it.

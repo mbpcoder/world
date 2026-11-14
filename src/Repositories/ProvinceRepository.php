@@ -32,9 +32,9 @@ class ProvinceRepository extends Repository
         return $this;
     }
 
-    public function capital(): CityRepository
+    public function capital(): Location|null
     {
-        return $this->cities()->provinceCapitals();
+        return $this->cities()->provinceCapitals()->first();
     }
 
     protected function setLocation(Location $location): void

@@ -76,7 +76,7 @@ class ProvinceCapitalsTest extends TestCase
     {
         $this->markTehranAsProvinceCapital();
 
-        $capital = World::provinces('Tehran')->capital()->first();
+        $capital = World::provinces('Tehran')->capital();
 
         $this->assertNotNull($capital);
         $this->assertSame('Tehran', $capital->englishName);
